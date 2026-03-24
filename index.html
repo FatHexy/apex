@@ -683,7 +683,7 @@
               { title: "BOXING + TKD FUSION", note: "Gabungkan teknik kedua disiplin.", items: [
                 { move: "Jab–Cross–Roundhouse Kick", detail: "5 round × 2 menit", tag: "FUSION", rest: "60s" },
                 { move: "Slip–Counter–Side Kick", detail: "4 round × 1 menit", tag: "FUSION", rest: "60s" },
-                { move: "Footwork Box Drill", detail: "3 round × 2 menit", tag: "FUSION", rest: "60s" }
+                { move: "Footwork Box Drill", detail: "3 round × 2  menit", tag: "FUSION", rest: "60s" }
               ]},
               { title: "KONDISIONING", items: [
                 { move: "Burpee", detail: "4 set × 10 reps", tag: "KONDISI", rest: "45s" },
@@ -839,6 +839,32 @@
       appContent.style.animation = null;
     }
 
+    function calculateSessionRest(session) {
+      let totalRestSeconds = 0;
+      if (!session.blocks) return "0 MIN";
+      
+      session.blocks.forEach(block => {
+        if (!block.items) return;
+        block.items.forEach(item => {
+          let detailStr = item.detail || "";
+          let restStr = item.rest || "";
+          
+          // Ambil angka pertama dari properti detail (misal "4" dari "4 set x 8 reps")
+          let multiplier = parseInt(detailStr.trim().split(' ')[0]);
+          if (isNaN(multiplier)) multiplier = 0;
+          
+          // Ambil angka saja dari properti rest (misal "30" dari "30s" atau "60s jog")
+          let restSeconds = parseInt(restStr.replace(/[^\d]/g, ''));
+          if (isNaN(restSeconds)) restSeconds = 0;
+          
+          totalRestSeconds += (multiplier * restSeconds);
+        });
+      });
+      
+      let totalMins = Math.round(totalRestSeconds / 60);
+      return totalMins + " MIN";
+    }
+
     // Parser cerdas untuk memformat detail Sets x Reps menjadi Metric Box
     function formatMetrics(detail) {
       const parsePart = (str) => {
@@ -855,6 +881,8 @@
     }
 
     function renderSession(session) {
+      const calculatedRest = calculateSessionRest(session);
+
       return `
         <div class="session-card">
           <div class="session-header is-open">
@@ -862,7 +890,7 @@
               <div class="session-name">${session.time} — ${session.label}</div>
               <div class="session-badges">
                 <div class="session-badge">${session.duration}</div>
-                ${session.restDuration ? `<div class="session-badge rest-badge-header">⏱ REST ${session.restDuration}</div>` : ''}
+                <div class="session-badge rest-badge-header">⏱ REST ${calculatedRest}</div>
               </div>
             </div>
             <div class="session-toggle-icon">▼</div>
