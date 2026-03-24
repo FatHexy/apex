@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>APEX ELITE — Protocol</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-base: #050505;
+      --bg-surface: #0a0a0a;
+      --bg-card: #0d0d0d;
+      --border-light: #1a1a1a;
+      --border-focus: #2a2a2a;
+      --text-main: #e8e8e8;
+      --text-muted: #666;
+      --text-dark: #444;
+      --accent: #FF4500; /* Dinamis via JS */
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body: 'Barlow', sans-serif;
+      --font-cyber: 'Orbitron', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Scrollbar minimalis premium */
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    .app-container {
+      width: 100%;
+      max-width: 600px;
+      background-color: var(--bg-surface);
+      position: relative;
+      box-shadow: 0 0 80px rgba(0, 0, 0, 0.8);
+      border-left: 1px solid var(--border-light);
+      border-right: 1px solid var(--border-light);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* --- Sticky Top Bar --- */
+    .sticky-top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-light);
+    }
+    .brand { font-family: var(--font-display); font-size: 16px; font-weight: 800; letter-spacing: 0.1em; color: #fff; }
+    .live-status { display: flex; align-items: center; gap: 12px; }
+    #live-time { font-family: monospace; font-size: 12px; color: var(--text-muted); letter-spacing: 0.1em; }
+    .today-badge { font-family: var(--font-display); font-size: 10px; font-weight: 800; letter-spacing: 0.15em; color: #000; background: var(--accent); padding: 4px 8px; border-radius: 3px; transition: background 0.4s ease; }
+
+    /* --- Global Header --- */
+    .global-header {
+      padding: 32px 24px 24px;
+      border-bottom: 3px solid var(--accent);
+      background: linear-gradient(180deg, #111 0%, #0a0a0a 100%);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.4s ease;
+    }
+
+    .header-glow {
+      position: absolute;
+      top: -50%; right: -35%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+      opacity: 0.15;
+      pointer-events: none;
+      transition: background 0.4s ease;
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .pre-title { font-family: var(--font-display); font-size: 11px; letter-spacing: 0.25em; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; }
+    .main-title { font-family: var(--font-display); font-size: 38px; font-weight: 900; letter-spacing: 0.04em; line-height: 1; color: #fff; }
+    .sub-title { font-size: 13px; color: var(--text-muted); margin-top: 8px; font-weight: 500; }
+    
+    .level-badge { text-align: right; }
+    .level-label { font-family: var(--font-display); font-size: 11px; color: var(--text-dark); letter-spacing: 0.2em; }
+    .level-value { font-family: var(--font-display); font-size: 22px; font-weight: 800; color: var(--accent); transition: color 0.4s ease; }
+
+    /* --- Day Selector --- */
+    .day-selector-wrap {
+      background: #0c0c0c;
+      border-bottom: 1px solid var(--border-light);
+      padding: 16px 24px;
+    }
+
+    .day-selector {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 10px 4px; 
+      margin: -10px -4px; 
+    }
+    .day-selector::-webkit-scrollbar { display: none; }
+
+    .day-btn {
+      flex: 1;
+      min-width: 60px;
+      padding: 10px 4px;
+      background: #141414;
+      color: var(--text-muted);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      font-family: var(--font-display);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+      position: relative;
+    }
+
+    /* Hover effect: Meredup/Terang sedikit, tanpa ganti warna background solid */
+    .day-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      filter: brightness(1.3);
+      border-color: var(--border-focus);
+    }
+
+    .day-btn.active {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transform: translateY(-2px);
+    }
+
+    .day-btn.active:hover:not(:disabled) {
+      filter: brightness(0.9); /* Meredup sedikit saat statusnya aktif */
+    }
+
+    .day-btn .day-name { font-weight: 800; font-size: 14px; letter-spacing: 0.1em; }
+    .day-btn .day-theme { font-size: 9px; font-weight: 700; margin-top: 2px; opacity: 0.8; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 4px;}
+
+    .day-today-marker {
+      position: absolute;
+      top: -8px;
+      right: -4px;
+      background: var(--accent);
+      color: #000;
+      font-size: 8px;
+      font-weight: 800;
+      padding: 3px 5px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+      font-family: var(--font-display);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.8);
+      z-index: 10;
+    }
+
+    .day-btn:disabled { cursor: not-allowed; opacity: 0.5; background: #080808; color: #333; }
+
+    /* --- Day Content Area --- */
+    .day-content {
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .active-day-header {
+      padding: 24px 24px 16px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .active-day-title { 
+      font-family: var(--font-cyber); 
+      font-size: 44px; 
+      font-weight: 900; 
+      color: #fff; 
+      line-height: 1; 
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-shadow: 0 0 12px var(--accent), 0 0 24px var(--accent);
+    }
+    .active-day-theme { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #fff; letter-spacing: 0.06em; line-height: 1.2;}
+    .active-day-sub { font-family: var(--font-display); font-size: 13px; color: var(--text-muted); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 4px;}
+
+    .today-label { font-family: var(--font-display); font-size: 11px; letter-spacing: 0.25em; color: var(--text-muted); font-weight: 700;}
+    .today-label.is-today { color: var(--accent); transition: color 0.4s ease; }
+    .active-day-title-wrap { display: flex; align-items: baseline; gap: 16px; }
+
+    /* --- Sessions --- */
+    .sessions-container {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .session-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    /* Folding mechanism for session */
+    .session-header {
+      padding: 14px 20px;
+      background: #111;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s ease;
+    }
+    .session-header:hover { background: #181818; }
+    .session-header.is-open { border-bottom: 1px solid var(--border-light); }
+    .session-header:not(.is-open) { border-bottom: none; }
+
+    .session-header-left { display: flex; align-items: center; gap: 12px; }
+    .session-name { font-family: var(--font-display); font-size: 18px; font-weight: 800; color: #fff; letter-spacing: 0.08em; }
+    .session-duration { 
+      font-family: var(--font-display); font-size: 12px; color: var(--accent); border: 1px solid var(--accent); 
+      padding: 3px 10px; border-radius: 4px; letter-spacing: 0.1em; font-weight: 700; background: rgba(255,255,255,0.02);
+    }
+    .session-toggle-icon { font-size: 14px; color: var(--text-muted); font-family: monospace; transition: transform 0.3s ease; }
+    .session-header.is-open .session-toggle-icon { transform: rotate(180deg); color: var(--accent); }
+
+    .session-body-wrapper {
+      display: grid;
+      grid-template-rows: 1fr;
+      transition: grid-template-rows 0.3s ease;
+    }
+    .session-body-wrapper.closed { grid-template-rows: 0fr; }
+    .session-body-inner { overflow: hidden; }
+
+    /* --- Blocks (Accordion) --- */
+    .blocks-container {
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .block {
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      background: #0f0f0f;
+      overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+
+    .block-header {
+      padding: 12px 16px;
+      background: #131313;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background 0.2s ease;
+    }
+
+    .block-header:hover { background: #181818; }
+    .block-header.is-open { border-bottom: 1px solid var(--border-light); }
+
+    .block-title { font-family: var(--font-display); font-size: 15px; font-weight: 800; color: #ccc; letter-spacing: 0.12em; }
+    .block-note { font-size: 11px; color: var(--text-muted); margin-top: 4px; font-weight: 400; line-height: 1.4; }
+    .block-toggle-icon { font-size: 12px; color: #555; font-family: monospace; transition: transform 0.3s ease; }
+    .block-header.is-open .block-toggle-icon { transform: rotate(180deg); color: var(--text-main); }
+
+    .block-items-wrapper {
+      display: grid;
+      grid-template-rows: 1fr;
+      transition: grid-template-rows 0.3s ease;
+    }
+    .block-items-wrapper.closed { grid-template-rows: 0fr; }
+    .block-items-inner { overflow: hidden; }
+
+    .exercise-item {
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid #161616;
+      transition: background 0.15s ease;
+    }
+    .exercise-item:last-child { border-bottom: none; }
+    .exercise-item:hover { background: rgba(255,255,255,0.02); }
+
+    .exercise-left { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
+    
+    .exercise-tag {
+      font-family: var(--font-display);
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      padding: 3px 6px; border-radius: 3px; border: 1px solid;
+      white-space: nowrap; flex-shrink: 0;
+      text-transform: uppercase;
+    }
+
+    .exercise-name { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: #ddd; letter-spacing: 0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+    .exercise-detail { font-family: var(--font-display); font-size: 14px; color: var(--text-muted); font-weight: 500; white-space: nowrap; flex-shrink: 0; letter-spacing: 0.05em; text-align: right;}
+
+    /* --- Protocol Notes --- */
+    .protocol-notes {
+      margin: 0 24px 40px;
+      padding: 24px;
+      background: #0c0c0c;
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .protocol-notes::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+      background: var(--text-dark); border-top-left-radius: 8px; border-bottom-left-radius: 8px;
+    }
+
+    .notes-title { font-family: var(--font-display); font-size: 14px; color: var(--text-muted); letter-spacing: 0.25em; margin-bottom: 16px; font-weight: 700; }
+    
+    .note-item { display: flex; gap: 12px; margin-bottom: 12px; font-size: 13px; line-height: 1.6; }
+    .note-item:last-child { margin-bottom: 0; }
+    .note-bullet { color: var(--accent); font-weight: 700; flex-shrink: 0; white-space: nowrap; transition: color 0.4s ease;}
+    .note-text { color: #888; }
+    
+    .rest-day-msg { text-align: center; padding: 60px 20px; }
+    .rest-day-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5;}
+    .rest-day-title { font-family: var(--font-display); font-size: 32px; color: #fff; margin-bottom: 8px; letter-spacing: 0.05em;}
+    .rest-day-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; max-width: 300px; margin: 0 auto; }
+
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Sticky Top Bar (Always fixed at the top) -->
+    <div class="sticky-top-bar">
+      <div class="brand">APEX<span id="brand-dot" style="color: var(--accent); transition: color 0.4s ease;">.</span>PROTOCOL</div>
+      <div class="live-status">
+        <span id="live-time">00:00:00</span>
+        <span class="today-badge" id="today-badge">—</span>
+      </div>
+    </div>
+
+    <!-- Global Header -->
+    <header class="global-header">
+      <div class="header-glow" id="headerGlow"></div>
+      <div class="header-content">
+        <div>
+          <div class="pre-title">ELITE ATHLETE PROGRAM · 22 YRS · INTERMEDIATE</div>
+          <div class="main-title">HSPU MASTERY</div>
+          <div class="sub-title">Kalistenik · Boxing · Taekwondo · Cardio</div>
+        </div>
+        <div class="level-badge">
+          <div class="level-label">LEVEL</div>
+          <div class="level-value" id="headerLevelVal">INTERMEDIATE+</div>
+          <div class="level-label" style="margin-top: 4px;">6 HARI/MINGGU</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Day Nav (Normal flow, not fixed) -->
+    <nav class="day-selector-wrap">
+      <div class="day-selector" id="daySelector">
+        <!-- Generated by JS -->
+      </div>
+    </nav>
+
+    <!-- Dynamic Content Area -->
+    <main id="appContent">
+      <!-- Generated by JS -->
+    </main>
+
+    <!-- Static Protocol Notes -->
+    <section class="protocol-notes">
+      <div class="notes-title">PROTOCOL NOTES</div>
+      <div class="note-item">
+        <div class="note-bullet" id="noteBullet1">— Morning Primer:</div>
+        <div class="note-text">Catat total reps setiap hari. Jika angkamu tidak naik 2 minggu berturut-turut, evaluasi recovery-mu.</div>
+      </div>
+      <div class="note-item">
+        <div class="note-bullet" id="noteBullet2">— HSPU Progression:</div>
+        <div class="note-text">Minggu 1–3: Elevated Pike Push-up. Minggu 4–6: Wall Negative HSPU. Minggu 7+: Full Wall HSPU attempts.</div>
+      </div>
+      <div class="note-item">
+        <div class="note-bullet" id="noteBullet3">— Running Base:</div>
+        <div class="note-text">Tambah 200–300m setiap minggu. Minggu 1 target 2.5 km, Bulan 2 target 4 km.</div>
+      </div>
+      <div class="note-item">
+        <div class="note-bullet" id="noteBullet4">— Beban Tambahan:</div>
+        <div class="note-text">Gunakan tas berisi buku/batu untuk squat. Tambah beban 5–10% setiap 2 minggu.</div>
+      </div>
+      <div class="note-item">
+        <div class="note-bullet" id="noteBullet5">— Recovery:</div>
+        <div class="note-text">Tidur 7–8 jam. Ini bagian dari program, bukan opsional. Istirahat total di hari Minggu.</div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // --- Data Base ---
+    const tagColors = {
+      PRIMER: { bg: "#1a0a00", text: "#FF8C00", border: "#FF8C00" },
+      SKILL: { bg: "#001a0a", text: "#39FF14", border: "#39FF14" },
+      STR: { bg: "#0a0015", text: "#BF5FFF", border: "#BF5FFF" },
+      KARDIO: { bg: "#001020", text: "#00BFFF", border: "#00BFFF" },
+      CORE: { bg: "#1a0010", text: "#FF69B4", border: "#FF69B4" },
+      BOKS: { bg: "#1a0500", text: "#FF4500", border: "#FF4500" },
+      TKD: { bg: "#001a1a", text: "#00FFD1", border: "#00FFD1" },
+      FUSION: { bg: "#1a1000", text: "#FFD700", border: "#FFD700" },
+      WARMUP: { bg: "#0d0d0d", text: "#888", border: "#444" },
+      MOBIL: { bg: "#0a1a10", text: "#7FFF00", border: "#7FFF00" },
+      ISOMETRIK: { bg: "#1a001a", text: "#DA70D6", border: "#DA70D6" },
+      POWER: { bg: "#1a0800", text: "#FFA500", border: "#FFA500" },
+      KONDISI: { bg: "#150005", text: "#FF6B6B", border: "#FF6B6B" },
+    };
+
+    const daysData = [
+      {
+        day: "SEN", full: "SENIN", theme: "PUSH DOMINANCE", sub: "HSPU Skill + Boxing", color: "#FF4500",
+        sessions: [
+          {
+            time: "🌅 PAGI", label: "SKILL & PUSH", duration: "60 MENIT",
+            blocks: [
+              { title: "MORNING PRIMER", note: "1 set maks reps — push limit kamu", items: [
+                { move: "Push-up", detail: "1 set × MAX reps", tag: "PRIMER" },
+                { move: "Pull-up", detail: "1 set × MAX reps", tag: "PRIMER" },
+                { move: "Dips (kursi)", detail: "1 set × MAX reps", tag: "PRIMER" }
+              ]},
+              { title: "HSPU SKILL BLOCK", note: "Fokus kualitas gerak, bukan kecepatan", items: [
+                { move: "Wall Handstand Hold", detail: "5 set × 30 detik", tag: "SKILL" },
+                { move: "Elevated Pike Push-up (kaki di kursi)", detail: "4 set × 5 reps @ 3-1-3 tempo", tag: "SKILL" },
+                { move: "Shoulder Wall Tap", detail: "3 set × 8 reps/sisi", tag: "SKILL" }
+              ]},
+              { title: "PUSH STRENGTH", note: "Istirahat 60–90 detik antar set", items: [
+                { move: "Diamond Push-up", detail: "4 set × 10 reps", tag: "STR" },
+                { move: "Wide Push-up", detail: "3 set × 12 reps", tag: "STR" },
+                { move: "Dips (2 kursi)", detail: "4 set × 8 reps", tag: "STR" },
+                { move: "Archer Push-up", detail: "3 set × 6 reps/sisi", tag: "STR" }
+              ]},
+              { title: "CARDIO FINISHER", note: "Istirahat 30 detik antar round", items: [
+                { move: "Skipping", detail: "3 round × 2 menit", tag: "KARDIO" }
+              ]}
+            ]
+          },
+          {
+            time: "🌆 SORE", label: "BOXING", duration: "60 MENIT",
+            blocks: [
+              { title: "WARM-UP", items: [ { move: "Shadow Boxing + Footwork", detail: "10 menit", tag: "WARMUP" } ]},
+              { title: "BOXING TECHNIQUE", note: "1 menit istirahat antar round", items: [
+                { move: "Jab–Cross Combo", detail: "5 round × 2 menit", tag: "BOKS" },
+                { move: "Body Shot Drill", detail: "3 round × 1 menit", tag: "BOKS" },
+                { move: "Head Movement + Slip", detail: "3 round × 1 menit", tag: "BOKS" }
+              ]},
+              { title: "STRENGTH FINISHER", items: [
+                { move: "Explosive Push-up", detail: "4 set × 8 reps", tag: "STR" },
+                { move: "Plank-to-Push-up", detail: "3 set × 10 reps", tag: "CORE" }
+              ]}
+            ]
+          }
+        ]
+      },
+      {
+        day: "SEL", full: "SELASA", theme: "LEG POWER", sub: "Lower Body + Taekwondo", color: "#00BFFF",
+        sessions: [
+          {
+            time: "🌅 PAGI", label: "LOWER BODY", duration: "60 MENIT",
+            blocks: [
+              { title: "MORNING PRIMER", note: "Lakukan set terbaikmu hari ini", items: [
+                { move: "Push-up", detail: "1 set × MAX reps", tag: "PRIMER" },
+                { move: "Pull-up", detail: "1 set × MAX reps", tag: "PRIMER" }
+              ]},
+              { title: "LEG STRENGTH", note: "Gunakan tas berbeban untuk squat. Istirahat 90 detik.", items: [
+                { move: "Squat (+ beban tas)", detail: "4 set × 15 reps", tag: "STR" },
+                { move: "Bulgarian Split Squat", detail: "4 set × 10 reps/kaki", tag: "STR" },
+                { move: "Single-Leg RDL", detail: "3 set × 10 reps/kaki", tag: "STR" },
+                { move: "Jump Squat", detail: "4 set × 10 reps", tag: "POWER" },
+                { move: "Wall Sit", detail: "3 set × 45 detik", tag: "ISOMETRIK" }
+              ]},
+              { title: "RUNNING INTERVALS", note: "Membangun base aerobik secara progresif", items: [
+                { move: "Interval Run", detail: "1 min jog + 30 det sprint × 6", tag: "KARDIO" }
+              ]}
+            ]
+          },
+          {
+            time: "🌆 SORE", label: "TAEKWONDO", duration: "60 MENIT",
+            blocks: [
+              { title: "WARM-UP", items: [ { move: "Dynamic Stretch + Leg Swing", detail: "10 menit", tag: "WARMUP" } ]},
+              { title: "TAEKWONDO TECHNIQUE", note: "Kontrol dan kecepatan. Istirahat 30 detik antar set.", items: [
+                { move: "Basic Stance Drill", detail: "5 menit", tag: "TKD" },
+                { move: "Dollyo Chagi (Roundhouse)", detail: "5 set × 10 reps/kaki", tag: "TKD" },
+                { move: "Ap Chagi (Front Kick)", detail: "4 set × 10 reps/kaki", tag: "TKD" },
+                { move: "Yeop Chagi (Side Kick)", detail: "4 set × 8 reps/kaki", tag: "TKD" },
+                { move: "Jab + Roundhouse Combo", detail: "5 round × 1 menit", tag: "TKD" }
+              ]},
+              { title: "KONDISIONING", items: [
+                { move: "Burpee", detail: "3 set × 10 reps", tag: "KONDISI" },
+                { move: "Mountain Climber", detail: "3 set × 30 detik", tag: "KONDISI" }
+              ]}
+            ]
+          }
+        ]
+      },
+      {
+        day: "RAB", full: "RABU", theme: "PULL & CORE", sub: "HSPU Skill + Boxing", color: "#39FF14",
+        sessions: [
+          {
+            time: "🌅 PAGI", label: "PULL + CORE", duration: "60 MENIT",
+            blocks: [
+              { title: "MORNING PRIMER", items: [
+                { move: "Push-up", detail: "1 set × MAX reps", tag: "PRIMER" },
+                { move: "Pull-up", detail: "1 set × MAX reps", tag: "PRIMER" },
+                { move: "Dips (kursi)", detail: "1 set × MAX reps", tag: "PRIMER" }
+              ]},
+              { title: "HSPU SKILL BLOCK", note: "Progress dari Senin: naikkan intensitas sedikit", items: [
+                { move: "Wall Kick-up + Hold", detail: "10 attempts (20+ det)", tag: "SKILL" },
+                { move: "Handstand Wall Shoulder Tap", detail: "4 set × 8 taps", tag: "SKILL" },
+                { move: "Eccentric Pike Push-up", detail: "4 set × 5 reps (lambat)", tag: "SKILL" }
+              ]},
+              { title: "PULL STRENGTH", note: "Istirahat 2 menit antar set pull-up", items: [
+                { move: "Pull-up", detail: "4 set × MAX reps", tag: "STR" },
+                { move: "Chin-up", detail: "3 set × 8 reps", tag: "STR" },
+                { move: "Australian Row (bawah meja)", detail: "4 set × 12 reps", tag: "STR" },
+                { move: "Commando Pull-up", detail: "3 set × 6 reps/sisi", tag: "STR" }
+              ]},
+              { title: "CORE BLOCK", note: "Istirahat 45 detik", items: [
+                { move: "L-sit Hold (lantai/kursi)", detail: "4 set × 15 detik", tag: "CORE" },
+                { move: "Hollow Body Hold", detail: "3 set × 30 detik", tag: "CORE" },
+                { move: "Dragon Flag Negative", detail: "3 set × 5 reps", tag: "CORE" }
+              ]}
+            ]
+          },
+          {
+            time: "🌆 SORE", label: "BOXING", duration: "60 MENIT",
+            blocks: [
+              { title: "WARM-UP", items: [ { move: "Footwork Ladder Drill", detail: "10 menit", tag: "WARMUP" } ]},
+              { title: "BOXING — DEFENSE & COUNTER", note: "Fokus minggu ini: slip + counter punch", items: [
+                { move: "Slip + Cross Counter", detail: "5 round × 2 menit", tag: "BOKS" },
+                { move: "Parry + Jab", detail: "3 round × 1 menit", tag: "BOKS" },
+                { move: "Roll + Uppercut", detail: "3 round × 1 menit", tag: "BOKS" },
+                { move: "Freestyle Shadow Boxing", detail: "3 round × 2 menit", tag: "BOKS" }
+              ]},
+              { title: "KONDISIONING", items: [
+                { move: "Skipping", detail: "5 round × 1 menit (30 det rest)", tag: "KARDIO" }
+              ]}
+            ]
+          }
+        ]
+      },
+      {
+        day: "KAM", full: "KAMIS", theme: "ACTIVE RECOVERY", sub: "Aerobik + Taekwondo", color: "#FFD700",
+        sessions: [
+          {
+            time: "🌅 PAGI", label: "CARDIO + MOBILITAS", duration: "50 MENIT",
+            blocks: [
+              { title: "AEROBIK BASE", note: "Pace santai — bisa ngobrol = pace tepat. Bukan hari mati-matian.", items: [
+                { move: "Easy Jog", detail: "20–25 menit @ santai", tag: "KARDIO" }
+              ]},
+              { title: "MOBILITY WORK", note: "Tahan setiap posisi 30–45 detik", items: [
+                { move: "Hip Flexor Stretch", detail: "3 × 45 detik/sisi", tag: "MOBIL" },
+                { move: "Thoracic Spine Rotation", detail: "2 × 10 reps/sisi", tag: "MOBIL" },
+                { move: "Shoulder Dislocate (handuk)", detail: "3 × 10 reps", tag: "MOBIL" },
+                { move: "Deep Squat Hold", detail: "3 × 45 detik", tag: "MOBIL" },
+                { move: "Pigeon Pose", detail: "2 × 60 detik/sisi", tag: "MOBIL" }
+              ]}
+            ]
+          },
+          {
+            time: "🌆 SORE", label: "TAEKWONDO", duration: "60 MENIT",
+            blocks: [
+              { title: "POOMSAE / PATTERN", note: "Fokus teknik bersih, bukan kecepatan", items: [
+                { move: "Taegeuk Pattern (Poomsae)", detail: "5 × repetisi penuh", tag: "TKD" },
+                { move: "Slow-motion Kick Drill", detail: "3 set × 10 reps/kaki", tag: "TKD" }
+              ]},
+              { title: "FLEKSIBILITAS TENDANGAN", note: "Sesi ini seperti yoga — tidak ada terburu-buru", items: [
+                { move: "Standing Leg Raise", detail: "3 × 10 reps/kaki", tag: "TKD" },
+                { move: "Side Split Progression", detail: "5 menit hold progresif", tag: "MOBIL" },
+                { move: "Front Split Progression", detail: "5 menit hold progresif", tag: "MOBIL" }
+              ]}
+            ]
+          }
+        ]
+      },
+      {
+        day: "JUM", full: "JUMAT", theme: "FULL BODY POWER", sub: "HSPU Skill + Mixed MA", color: "#FF69B4",
+        sessions: [
+          {
+            time: "🌅 PAGI", label: "FULL BODY + HSPU", duration: "60 MENIT",
+            blocks: [
+              { title: "MORNING PRIMER", items: [
+                { move: "Push-up", detail: "1 set × MAX reps", tag: "PRIMER" },
+                { move: "Pull-up", detail: "1 set × MAX reps", tag: "PRIMER" },
+                { move: "Dips (kursi)", detail: "1 set × MAX reps", tag: "PRIMER" }
+              ]},
+              { title: "HSPU SKILL — CHECK", note: "Ini hari tes: coba 1 rep HSPU dengan dinding.", items: [
+                { move: "Wall HSPU Negative (5 det turun)", detail: "5 set × 3 reps", tag: "SKILL" },
+                { move: "Elevated Pike Push-up", detail: "4 set × 6 reps", tag: "SKILL" },
+                { move: "Handstand Wall Hold", detail: "3 set × 40 detik", tag: "SKILL" }
+              ]},
+              { title: "FULL BODY CIRCUIT", note: "Selesaikan circuit, lalu istirahat 2 menit. × 4 round.", items: [
+                { move: "Pull-up", detail: "MAX reps per round", tag: "STR" },
+                { move: "Dips", detail: "10 reps per round", tag: "STR" },
+                { move: "Push-up", detail: "15 reps per round", tag: "STR" },
+                { move: "Jump Squat", detail: "12 reps per round", tag: "POWER" },
+                { move: "L-sit Hold", detail: "20 detik per round", tag: "CORE" }
+              ]},
+              { title: "CARDIO FINISHER", items: [
+                { move: "Skipping", detail: "5 round × 1 menit", tag: "KARDIO" }
+              ]}
+            ]
+          },
+          {
+            time: "🌆 SORE", label: "MIXED MARTIAL ARTS", duration: "60 MENIT",
+            blocks: [
+              { title: "WARM-UP", items: [ { move: "Shadow Boxing + Tendangan", detail: "10 menit", tag: "WARMUP" } ]},
+              { title: "BOXING + TKD FUSION", note: "Gabungkan teknik kedua disiplin dalam satu kombinasi", items: [
+                { move: "Jab–Cross–Roundhouse Kick", detail: "5 round × 2 menit", tag: "FUSION" },
+                { move: "Slip–Counter–Side Kick", detail: "4 round × 1 menit", tag: "FUSION" },
+                { move: "Footwork Box Drill", detail: "3 round × 2 menit", tag: "FUSION" }
+              ]},
+              { title: "KONDISIONING", items: [
+                { move: "Burpee", detail: "4 set × 10 reps", tag: "KONDISI" },
+                { move: "Sprint di Tempat (High Knees)", detail: "5 × 30 detik", tag: "KONDISI" }
+              ]}
+            ]
+          }
+        ]
+      },
+      {
+        day: "SAB", full: "SABTU", theme: "WAR MODE", sub: "Full Conditioning Day", color: "#FF4500",
+        sessions: [
+          {
+            time: "🌅 PAGI", label: "KONDISIONING KERAS", duration: "60 MENIT",
+            blocks: [
+              { title: "RUNNING — PUSH LIMIT", note: "Target: 2.5 km. Jika belum bisa, jalan cepat bagian akhir.", items: [
+                { move: "Continuous Run", detail: "Target 2.5 km", tag: "KARDIO" }
+              ]},
+              { title: "METCON CIRCUIT", note: "3 round. Istirahat 90 detik antar round.", items: [
+                { move: "Burpee Pull-up", detail: "3 set × 8 reps", tag: "POWER" },
+                { move: "Jump Squat", detail: "3 set × 15 reps", tag: "POWER" },
+                { move: "Push-up", detail: "3 set × 20 reps", tag: "STR" },
+                { move: "Skipping", detail: "3 × 3 menit", tag: "KARDIO" }
+              ]},
+              { title: "SPRINT FINISHER", note: "Keluar semua yang ada", items: [
+                { move: "Sprint Interval", detail: "8 × 15 detik sprint / 45 detik jalan", tag: "KARDIO" }
+              ]}
+            ]
+          },
+          {
+            time: "🌆 SORE", label: "SPARRING & TEKNIK BEBAS", duration: "60 MENIT",
+            blocks: [
+              { title: "OPEN TECHNIQUE", note: "Sesi bebas — latih apa yang terasa perlu diperbaiki minggu ini", items: [
+                { move: "Shadow Sparring — Boxing Focus", detail: "4 round × 3 menit", tag: "BOKS" },
+                { move: "Shadow Sparring — TKD Focus", detail: "4 round × 3 menit", tag: "TKD" },
+                { move: "Combo Kreasi Sendiri", detail: "5 round × 2 menit", tag: "FUSION" }
+              ]},
+              { title: "RECOVERY ACTIVE", items: [
+                { move: "Full Body Stretch", detail: "15 menit", tag: "MOBIL" }
+              ]}
+            ]
+          }
+        ]
+      },
+      {
+        day: "MIN", full: "MINGGU", theme: "REST DAY", sub: "Total Recovery", color: "#444444",
+        isRest: true
+      }
+    ];
+
+    // --- State Management ---
+    // Start at current day (0=Senin, 6=Minggu)
+    let todayObj = new Date().getDay();
+    let currentDayIndex = todayObj === 0 ? 6 : todayObj - 1; 
+    const realTodayIndex = currentDayIndex;
+
+    const daySelector = document.getElementById('daySelector');
+    const appContent = document.getElementById('appContent');
+    const rootStyle = document.documentElement.style;
+
+    // --- Render Functions ---
+    function init() {
+      updateTime();
+      setInterval(updateTime, 1000);
+      document.getElementById('today-badge').textContent = new Date().toLocaleDateString('id-ID',{weekday:'long'}).toUpperCase();
+      
+      renderNav();
+      setDay(currentDayIndex);
+      setupGlobalListeners();
+    }
+
+    function updateTime() {
+      const n = new Date();
+      const h = String(n.getHours()).padStart(2, '0');
+      const m = String(n.getMinutes()).padStart(2, '0');
+      const s = String(n.getSeconds()).padStart(2, '0');
+      document.getElementById('live-time').textContent = h + ':' + m + ':' + s;
+    }
+
+    function renderNav() {
+      daySelector.innerHTML = daysData.map((d, i) => {
+        const isToday = (i === realTodayIndex);
+        return `
+        <button class="day-btn" data-idx="${i}">
+          <div class="day-name">${d.day}</div>
+          <div class="day-theme">${d.isRest ? 'REST' : d.theme.split(' ')[0]}</div>
+          ${isToday ? '<div class="day-today-marker">HARI INI</div>' : ''}
+        </button>
+        `;
+      }).join('');
+    }
+
+    function setDay(index) {
+      currentDayIndex = index;
+      const d = daysData[index];
+
+      // Update CSS Variables & Header
+      rootStyle.setProperty('--accent', d.color);
+      document.getElementById('headerLevelVal').style.color = d.color;
+      document.getElementById('brand-dot').style.color = d.color;
+      
+      // Update bullets notes color
+      for(let i=1; i<=5; i++){
+          document.getElementById('noteBullet'+i).style.color = d.color;
+      }
+
+      // Update Nav Active State
+      document.querySelectorAll('.day-btn').forEach((btn, i) => {
+        if (i === index) btn.classList.add('active');
+        else btn.classList.remove('active');
+      });
+
+      // Render Content
+      if (d.isRest) {
+        appContent.innerHTML = `
+          <div class="day-content rest-day-msg">
+            <div class="rest-day-icon">💤</div>
+            <div class="rest-day-title">REST DAY</div>
+            <div class="rest-day-desc">Otot tumbuh saat istirahat, bukan saat latihan. Matikan alarm, makan yang cukup, dan biarkan tubuhmu memulihkan diri untuk hari Senin.</div>
+          </div>
+        `;
+      } else {
+        const isToday = (index === realTodayIndex);
+        appContent.innerHTML = `
+          <div class="day-content">
+            <div class="active-day-header">
+              <div class="today-label ${isToday ? 'is-today' : ''}">${isToday ? '🔴 HARI INI — LATIHAN KAMU SEKARANG' : '📅 JADWAL PADA HARI'}</div>
+              <div class="active-day-title-wrap">
+                <div class="active-day-title">${d.full}</div>
+                <div>
+                  <div class="active-day-theme">${d.theme}</div>
+                  <div class="active-day-sub">${d.sub}</div>
+                </div>
+              </div>
+            </div>
+            <div class="sessions-container">
+              ${d.sessions.map(renderSession).join('')}
+            </div>
+          </div>
+        `;
+      }
+      
+      // Reset animation
+      appContent.style.animation = 'none';
+      appContent.offsetHeight; /* trigger reflow */
+      appContent.style.animation = null;
+    }
+
+    function renderSession(session) {
+      return `
+        <div class="session-card">
+          <div class="session-header is-open">
+            <div class="session-header-left">
+              <div class="session-name">${session.time} — ${session.label}</div>
+              <div class="session-duration">${session.duration}</div>
+            </div>
+            <div class="session-toggle-icon">▼</div>
+          </div>
+          <div class="session-body-wrapper">
+            <div class="session-body-inner blocks-container">
+              ${session.blocks.map(renderBlock).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderBlock(block) {
+      const itemsHtml = block.items.map(item => {
+        const tc = tagColors[item.tag] || tagColors.WARMUP;
+        return `
+          <div class="exercise-item">
+            <div class="exercise-left">
+              <span class="exercise-tag" style="color: ${tc.text}; background: ${tc.bg}; border-color: ${tc.border};">
+                ${item.tag}
+              </span>
+              <span class="exercise-name">${item.move}</span>
+            </div>
+            <span class="exercise-detail">${item.detail}</span>
+          </div>
+        `;
+      }).join('');
+
+      return `
+        <div class="block">
+          <div class="block-header is-open">
+            <div>
+              <div class="block-title">${block.title}</div>
+              ${block.note ? `<div class="block-note">${block.note}</div>` : ''}
+            </div>
+            <div class="block-toggle-icon">▼</div>
+          </div>
+          <div class="block-items-wrapper">
+            <div class="block-items-inner">
+              ${itemsHtml}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function setupGlobalListeners() {
+      document.addEventListener('click', (e) => {
+        // Handle Day Navigation
+        const dayBtn = e.target.closest('.day-btn');
+        if (dayBtn) {
+          const idx = parseInt(dayBtn.getAttribute('data-idx'));
+          if (!isNaN(idx) && idx !== currentDayIndex) {
+            setDay(idx);
+          }
+        }
+
+        // Handle Block Accordion Toggle
+        const blockHeader = e.target.closest('.block-header');
+        if (blockHeader) {
+          const wrapper = blockHeader.nextElementSibling;
+          const isOpen = blockHeader.classList.contains('is-open');
+          
+          if (isOpen) {
+            blockHeader.classList.remove('is-open');
+            wrapper.classList.add('closed');
+          } else {
+            blockHeader.classList.add('is-open');
+            wrapper.classList.remove('closed');
+          }
+        }
+
+        // Handle Session Accordion Toggle
+        const sessionHeader = e.target.closest('.session-header');
+        if (sessionHeader) {
+          const wrapper = sessionHeader.nextElementSibling;
+          const isOpen = sessionHeader.classList.contains('is-open');
+
+          if (isOpen) {
+            sessionHeader.classList.remove('is-open');
+            wrapper.classList.add('closed');
+          } else {
+            sessionHeader.classList.add('is-open');
+            wrapper.classList.remove('closed');
+          }
+        }
+      });
+    }
+
+    // Run
+    init();
+  </script>
+</body>
+</html>
