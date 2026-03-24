@@ -18,7 +18,8 @@
       --text-main: #e8e8e8;
       --text-muted: #666;
       --text-dark: #444;
-      --accent: #FF4500; /* Dinamis via JS */
+      --accent: #FF4500;
+      --accent-rgb: 255, 69, 0; /* Fallback RGB default */
       --font-display: 'Barlow Condensed', sans-serif;
       --font-body: 'Barlow', sans-serif;
       --font-cyber: 'Orbitron', sans-serif;
@@ -41,7 +42,6 @@
       justify-content: center;
     }
 
-    /* Scrollbar minimalis premium */
     ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
@@ -149,7 +149,6 @@
       position: relative;
     }
 
-    /* Hover effect: Meredup/Terang sedikit, tanpa ganti warna background solid */
     .day-btn:hover:not(:disabled) {
       transform: translateY(-2px);
       filter: brightness(1.3);
@@ -164,9 +163,7 @@
       transform: translateY(-2px);
     }
 
-    .day-btn.active:hover:not(:disabled) {
-      filter: brightness(0.9); /* Meredup sedikit saat statusnya aktif */
-    }
+    .day-btn.active:hover:not(:disabled) { filter: brightness(0.9); }
 
     .day-btn .day-name { font-weight: 800; font-size: 14px; letter-spacing: 0.1em; }
     .day-btn .day-theme { font-size: 9px; font-weight: 700; margin-top: 2px; opacity: 0.8; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 4px;}
@@ -190,9 +187,7 @@
     .day-btn:disabled { cursor: not-allowed; opacity: 0.5; background: #080808; color: #333; }
 
     /* --- Day Content Area --- */
-    .day-content {
-      animation: fadeIn 0.4s ease forwards;
-    }
+    .day-content { animation: fadeIn 0.4s ease forwards; }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
@@ -210,7 +205,7 @@
 
     .active-day-title { 
       font-family: var(--font-cyber); 
-      font-size: 44px; 
+      font-size: 40px; 
       font-weight: 900; 
       color: #fff; 
       line-height: 1; 
@@ -223,7 +218,7 @@
 
     .today-label { font-family: var(--font-display); font-size: 11px; letter-spacing: 0.25em; color: var(--text-muted); font-weight: 700;}
     .today-label.is-today { color: var(--accent); transition: color 0.4s ease; }
-    .active-day-title-wrap { display: flex; align-items: baseline; gap: 16px; }
+    .active-day-title-wrap { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
 
     /* --- Sessions --- */
     .sessions-container {
@@ -241,7 +236,6 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.2);
     }
 
-    /* Folding mechanism for session */
     .session-header {
       padding: 14px 20px;
       background: #111;
@@ -257,30 +251,28 @@
     .session-header.is-open { border-bottom: 1px solid var(--border-light); }
     .session-header:not(.is-open) { border-bottom: none; }
 
-    .session-header-left { display: flex; align-items: center; gap: 12px; }
+    .session-header-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
     .session-name { font-family: var(--font-display); font-size: 18px; font-weight: 800; color: #fff; letter-spacing: 0.08em; }
-    .session-duration { 
-      font-family: var(--font-display); font-size: 12px; color: var(--accent); border: 1px solid var(--accent); 
-      padding: 3px 10px; border-radius: 4px; letter-spacing: 0.1em; font-weight: 700; background: rgba(255,255,255,0.02);
+    
+    .session-badges { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .session-badge { 
+      font-family: var(--font-display); font-size: 11px; color: var(--accent); border: 1px solid var(--accent); 
+      padding: 3px 8px; border-radius: 4px; letter-spacing: 0.1em; font-weight: 700; background: rgba(255,255,255,0.02);
     }
+    .session-badge.rest-badge-header {
+      color: #aaa;
+      border-color: #444;
+    }
+
     .session-toggle-icon { font-size: 14px; color: var(--text-muted); font-family: monospace; transition: transform 0.3s ease; }
     .session-header.is-open .session-toggle-icon { transform: rotate(180deg); color: var(--accent); }
 
-    .session-body-wrapper {
-      display: grid;
-      grid-template-rows: 1fr;
-      transition: grid-template-rows 0.3s ease;
-    }
+    .session-body-wrapper { display: grid; grid-template-rows: 1fr; transition: grid-template-rows 0.3s ease; }
     .session-body-wrapper.closed { grid-template-rows: 0fr; }
     .session-body-inner { overflow: hidden; }
 
     /* --- Blocks (Accordion) --- */
-    .blocks-container {
-      padding: 16px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+    .blocks-container { padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; }
 
     .block {
       border: 1px solid var(--border-light);
@@ -304,21 +296,18 @@
     .block-header:hover { background: #181818; }
     .block-header.is-open { border-bottom: 1px solid var(--border-light); }
 
-    .block-title { font-family: var(--font-display); font-size: 15px; font-weight: 800; color: #ccc; letter-spacing: 0.12em; }
+    .block-title { font-family: var(--font-display); font-size: 15px; font-weight: 800; color: #ccc; letter-spacing: 0.12em; line-height: 1.3;}
     .block-note { font-size: 11px; color: var(--text-muted); margin-top: 4px; font-weight: 400; line-height: 1.4; }
     .block-toggle-icon { font-size: 12px; color: #555; font-family: monospace; transition: transform 0.3s ease; }
     .block-header.is-open .block-toggle-icon { transform: rotate(180deg); color: var(--text-main); }
 
-    .block-items-wrapper {
-      display: grid;
-      grid-template-rows: 1fr;
-      transition: grid-template-rows 0.3s ease;
-    }
+    .block-items-wrapper { display: grid; grid-template-rows: 1fr; transition: grid-template-rows 0.3s ease; }
     .block-items-wrapper.closed { grid-template-rows: 0fr; }
     .block-items-inner { overflow: hidden; }
 
+    /* --- Exercise Items (Mobile Optimized) --- */
     .exercise-item {
-      padding: 12px 16px;
+      padding: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -329,18 +318,59 @@
     .exercise-item:last-child { border-bottom: none; }
     .exercise-item:hover { background: rgba(255,255,255,0.02); }
 
-    .exercise-left { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
+    .exercise-left { display: flex; align-items: flex-start; gap: 12px; flex: 1; min-width: 0; }
     
     .exercise-tag {
-      font-family: var(--font-display);
-      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
-      padding: 3px 6px; border-radius: 3px; border: 1px solid;
-      white-space: nowrap; flex-shrink: 0;
-      text-transform: uppercase;
+      font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      padding: 3px 6px; border-radius: 3px; border: 1px solid; flex-shrink: 0; text-transform: uppercase; margin-top: 2px;
     }
 
-    .exercise-name { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: #ddd; letter-spacing: 0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
-    .exercise-detail { font-family: var(--font-display); font-size: 14px; color: var(--text-muted); font-weight: 500; white-space: nowrap; flex-shrink: 0; letter-spacing: 0.05em; text-align: right;}
+    .exercise-name { 
+      font-family: var(--font-display); font-size: 16px; font-weight: 600; color: #ddd; 
+      letter-spacing: 0.02em; white-space: normal; line-height: 1.3; word-break: break-word;
+    }
+
+    /* Tampilan Metrics Sets/Reps Premium */
+    .exercise-right {
+      display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0;
+    }
+
+    .metrics-group {
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end;
+    }
+
+    .metric-box {
+      background: rgba(var(--accent-rgb), 0.05);
+      border: 1px solid rgba(var(--accent-rgb), 0.3);
+      border-radius: 4px;
+      padding: 3px 8px;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
+    }
+
+    .m-val { font-family: var(--font-cyber); font-size: 14px; font-weight: 700; color: var(--accent); }
+    .m-lbl { font-family: var(--font-display); font-size: 11px; font-weight: 600; color: #999; letter-spacing: 0.1em; text-transform: uppercase; }
+    .m-text { font-family: var(--font-display); font-size: 12px; font-weight: 600; color: #ccc; letter-spacing: 0.05em; text-transform: uppercase; }
+    .metric-divider { font-size: 14px; color: #555; font-weight: 900; }
+
+    .rest-badge {
+      font-family: monospace; font-size: 11px; font-weight: 700; color: #aaa;
+      background: rgba(255,255,255,0.08); padding: 4px 6px; border-radius: 4px;
+      display: inline-flex; align-items: center; gap: 4px; border: 1px solid rgba(255,255,255,0.1);
+    }
+    .rest-badge::before { content: '⏱'; font-size: 10px; }
+
+    /* Media Query for Mobile */
+    @media (max-width: 480px) {
+      .exercise-item { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .exercise-right { flex-direction: row; width: 100%; justify-content: space-between; align-items: center; padding-left: 0; margin-top: 4px;}
+      .metrics-group { justify-content: flex-start; }
+      .active-day-title { font-size: 32px; }
+      .sessions-container { padding: 16px; }
+      .protocol-notes { margin: 0 16px 40px; }
+    }
 
     /* --- Protocol Notes --- */
     .protocol-notes {
@@ -352,13 +382,8 @@
       position: relative;
     }
 
-    .protocol-notes::before {
-      content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
-      background: var(--text-dark); border-top-left-radius: 8px; border-bottom-left-radius: 8px;
-    }
-
+    .protocol-notes::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--text-dark); border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
     .notes-title { font-family: var(--font-display); font-size: 14px; color: var(--text-muted); letter-spacing: 0.25em; margin-bottom: 16px; font-weight: 700; }
-    
     .note-item { display: flex; gap: 12px; margin-bottom: 12px; font-size: 13px; line-height: 1.6; }
     .note-item:last-child { margin-bottom: 0; }
     .note-bullet { color: var(--accent); font-weight: 700; flex-shrink: 0; white-space: nowrap; transition: color 0.4s ease;}
@@ -375,7 +400,6 @@
 
   <div class="app-container">
     
-    <!-- Sticky Top Bar (Always fixed at the top) -->
     <div class="sticky-top-bar">
       <div class="brand">APEX<span id="brand-dot" style="color: var(--accent); transition: color 0.4s ease;">.</span>PROTOCOL</div>
       <div class="live-status">
@@ -384,7 +408,6 @@
       </div>
     </div>
 
-    <!-- Global Header -->
     <header class="global-header">
       <div class="header-glow" id="headerGlow"></div>
       <div class="header-content">
@@ -401,19 +424,16 @@
       </div>
     </header>
 
-    <!-- Day Nav (Normal flow, not fixed) -->
     <nav class="day-selector-wrap">
       <div class="day-selector" id="daySelector">
         <!-- Generated by JS -->
       </div>
     </nav>
 
-    <!-- Dynamic Content Area -->
     <main id="appContent">
       <!-- Generated by JS -->
     </main>
 
-    <!-- Static Protocol Notes -->
     <section class="protocol-notes">
       <div class="notes-title">PROTOCOL NOTES</div>
       <div class="note-item">
@@ -441,7 +461,6 @@
   </div>
 
   <script>
-    // --- Data Base ---
     const tagColors = {
       PRIMER: { bg: "#1a0a00", text: "#FF8C00", border: "#FF8C00" },
       SKILL: { bg: "#001a0a", text: "#39FF14", border: "#39FF14" },
@@ -458,46 +477,48 @@
       KONDISI: { bg: "#150005", text: "#FF6B6B", border: "#FF6B6B" },
     };
 
+    // Struktur detail sudah diperbarui agar parser dapat memisahkan angka dan huruf dengan rapi
     const daysData = [
       {
         day: "SEN", full: "SENIN", theme: "PUSH DOMINANCE", sub: "HSPU Skill + Boxing", color: "#FF4500",
         sessions: [
           {
-            time: "🌅 PAGI", label: "SKILL & PUSH", duration: "60 MENIT",
+            time: "🌅 PAGI", label: "SKILL & PUSH", duration: "60 MENIT", restDuration: "38 MIN",
             blocks: [
-              { title: "MORNING PRIMER", note: "1 set maks reps — push limit kamu", items: [
-                { move: "Push-up", detail: "1 set × MAX reps", tag: "PRIMER" },
-                { move: "Pull-up", detail: "1 set × MAX reps", tag: "PRIMER" },
-                { move: "Dips (kursi)", detail: "1 set × MAX reps", tag: "PRIMER" }
+              { title: "MORNING PRIMER", note: "Lakukan 1 set dengan repetisi semaksimal mungkin.", items: [
+                { move: "Push-up", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
+                { move: "Pull-up", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
+                { move: "Dips (kursi)", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
+                { move: "Pistol Squat", detail: "1 set × MAX reps/kaki", tag: "PRIMER", rest: "60s" }
               ]},
-              { title: "HSPU SKILL BLOCK", note: "Fokus kualitas gerak, bukan kecepatan", items: [
-                { move: "Wall Handstand Hold", detail: "5 set × 30 detik", tag: "SKILL" },
-                { move: "Elevated Pike Push-up (kaki di kursi)", detail: "4 set × 5 reps @ 3-1-3 tempo", tag: "SKILL" },
-                { move: "Shoulder Wall Tap", detail: "3 set × 8 reps/sisi", tag: "SKILL" }
+              { title: "HSPU SKILL BLOCK", note: "Fokus kualitas gerak, bukan kecepatan.", items: [
+                { move: "Wall Handstand Hold", detail: "5 set × 30 detik", tag: "SKILL", rest: "60s" },
+                { move: "Elevated Pike Push-up", detail: "4 set × 5 reps @ 3-1-3 tempo", tag: "SKILL", rest: "90s" },
+                { move: "Shoulder Wall Tap", detail: "3 set × 8 reps/sisi", tag: "SKILL", rest: "60s" }
               ]},
-              { title: "PUSH STRENGTH", note: "Istirahat 60–90 detik antar set", items: [
-                { move: "Diamond Push-up", detail: "4 set × 10 reps", tag: "STR" },
-                { move: "Wide Push-up", detail: "3 set × 12 reps", tag: "STR" },
-                { move: "Dips (2 kursi)", detail: "4 set × 8 reps", tag: "STR" },
-                { move: "Archer Push-up", detail: "3 set × 6 reps/sisi", tag: "STR" }
+              { title: "PUSH STRENGTH", note: "Jaga form tetap solid.", items: [
+                { move: "Diamond Push-up", detail: "4 set × 10 reps", tag: "STR", rest: "90s" },
+                { move: "Wide Push-up", detail: "3 set × 12 reps", tag: "STR", rest: "60s" },
+                { move: "Dips (2 kursi)", detail: "4 set × 10 reps", tag: "STR", rest: "90s" },
+                { move: "Archer Push-up", detail: "3 set × 6 reps/sisi", tag: "STR", rest: "90s" }
               ]},
-              { title: "CARDIO FINISHER", note: "Istirahat 30 detik antar round", items: [
-                { move: "Skipping", detail: "3 round × 2 menit", tag: "KARDIO" }
+              { title: "CARDIO FINISHER", note: "Jaga ritme jantung.", items: [
+                { move: "Skipping", detail: "3 round × 2 menit", tag: "KARDIO", rest: "30s" }
               ]}
             ]
           },
           {
-            time: "🌆 SORE", label: "BOXING", duration: "60 MENIT",
+            time: "🌆 SORE", label: "BOXING", duration: "60 MENIT", restDuration: "18 MIN",
             blocks: [
-              { title: "WARM-UP", items: [ { move: "Shadow Boxing + Footwork", detail: "10 menit", tag: "WARMUP" } ]},
-              { title: "BOXING TECHNIQUE", note: "1 menit istirahat antar round", items: [
-                { move: "Jab–Cross Combo", detail: "5 round × 2 menit", tag: "BOKS" },
-                { move: "Body Shot Drill", detail: "3 round × 1 menit", tag: "BOKS" },
-                { move: "Head Movement + Slip", detail: "3 round × 1 menit", tag: "BOKS" }
+              { title: "WARM-UP", items: [ { move: "Shadow Boxing + Footwork", detail: "10 menit", tag: "WARMUP", rest: "None" } ]},
+              { title: "BOXING TECHNIQUE", note: "Fokus kecepatan dan rotasi pinggul.", items: [
+                { move: "Jab–Cross Combo", detail: "5 round × 2 menit", tag: "BOKS", rest: "60s" },
+                { move: "Body Shot Drill", detail: "3 round × 1 menit", tag: "BOKS", rest: "60s" },
+                { move: "Head Movement + Slip", detail: "3 round × 1 menit", tag: "BOKS", rest: "60s" }
               ]},
               { title: "STRENGTH FINISHER", items: [
-                { move: "Explosive Push-up", detail: "4 set × 8 reps", tag: "STR" },
-                { move: "Plank-to-Push-up", detail: "3 set × 10 reps", tag: "CORE" }
+                { move: "Explosive Push-up", detail: "4 set × 8 reps", tag: "STR", rest: "60s" },
+                { move: "Plank-to-Push-up", detail: "3 set × 10 reps", tag: "CORE", rest: "45s" }
               ]}
             ]
           }
@@ -507,38 +528,39 @@
         day: "SEL", full: "SELASA", theme: "LEG POWER", sub: "Lower Body + Taekwondo", color: "#00BFFF",
         sessions: [
           {
-            time: "🌅 PAGI", label: "LOWER BODY", duration: "60 MENIT",
+            time: "🌅 PAGI", label: "LOWER BODY", duration: "60 MENIT", restDuration: "25 MIN",
             blocks: [
-              { title: "MORNING PRIMER", note: "Lakukan set terbaikmu hari ini", items: [
-                { move: "Push-up", detail: "1 set × MAX reps", tag: "PRIMER" },
-                { move: "Pull-up", detail: "1 set × MAX reps", tag: "PRIMER" }
+              { title: "MORNING PRIMER", note: "Lakukan set terbaikmu hari ini.", items: [
+                { move: "Push-up", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
+                { move: "Pull-up", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
+                { move: "Pistol Squat", detail: "1 set × MAX reps/kaki", tag: "PRIMER", rest: "60s" }
               ]},
-              { title: "LEG STRENGTH", note: "Gunakan tas berbeban untuk squat. Istirahat 90 detik.", items: [
-                { move: "Squat (+ beban tas)", detail: "4 set × 15 reps", tag: "STR" },
-                { move: "Bulgarian Split Squat", detail: "4 set × 10 reps/kaki", tag: "STR" },
-                { move: "Single-Leg RDL", detail: "3 set × 10 reps/kaki", tag: "STR" },
-                { move: "Jump Squat", detail: "4 set × 10 reps", tag: "POWER" },
-                { move: "Wall Sit", detail: "3 set × 45 detik", tag: "ISOMETRIK" }
+              { title: "LEG STRENGTH", note: "Gunakan tas berbeban untuk squat.", items: [
+                { move: "Squat (+ beban tas)", detail: "4 set × 15 reps", tag: "STR", rest: "90s" },
+                { move: "Bulgarian Split Squat", detail: "4 set × 10 reps/kaki", tag: "STR", rest: "90s" },
+                { move: "Single-Leg RDL", detail: "3 set × 10 reps/kaki", tag: "STR", rest: "60s" },
+                { move: "Jump Squat", detail: "4 set × 12 reps", tag: "POWER", rest: "60s" },
+                { move: "Wall Sit", detail: "3 set × 45 detik", tag: "ISOMETRIK", rest: "60s" }
               ]},
-              { title: "RUNNING INTERVALS", note: "Membangun base aerobik secara progresif", items: [
-                { move: "Interval Run", detail: "1 min jog + 30 det sprint × 6", tag: "KARDIO" }
+              { title: "RUNNING INTERVALS", note: "Membangun base aerobik.", items: [
+                { move: "Interval Run", detail: "6 round × 30 det sprint", tag: "KARDIO", rest: "60s jog" }
               ]}
             ]
           },
           {
-            time: "🌆 SORE", label: "TAEKWONDO", duration: "60 MENIT",
+            time: "🌆 SORE", label: "TAEKWONDO", duration: "60 MENIT", restDuration: "15 MIN",
             blocks: [
-              { title: "WARM-UP", items: [ { move: "Dynamic Stretch + Leg Swing", detail: "10 menit", tag: "WARMUP" } ]},
-              { title: "TAEKWONDO TECHNIQUE", note: "Kontrol dan kecepatan. Istirahat 30 detik antar set.", items: [
-                { move: "Basic Stance Drill", detail: "5 menit", tag: "TKD" },
-                { move: "Dollyo Chagi (Roundhouse)", detail: "5 set × 10 reps/kaki", tag: "TKD" },
-                { move: "Ap Chagi (Front Kick)", detail: "4 set × 10 reps/kaki", tag: "TKD" },
-                { move: "Yeop Chagi (Side Kick)", detail: "4 set × 8 reps/kaki", tag: "TKD" },
-                { move: "Jab + Roundhouse Combo", detail: "5 round × 1 menit", tag: "TKD" }
+              { title: "WARM-UP", items: [ { move: "Dynamic Stretch + Leg Swing", detail: "10 menit", tag: "WARMUP", rest: "None" } ]},
+              { title: "TAEKWONDO TECHNIQUE", note: "Kontrol dan kecepatan.", items: [
+                { move: "Basic Stance Drill", detail: "5 menit", tag: "TKD", rest: "None" },
+                { move: "Dollyo Chagi (Roundhouse)", detail: "5 set × 10 reps/kaki", tag: "TKD", rest: "30s" },
+                { move: "Ap Chagi (Front Kick)", detail: "4 set × 10 reps/kaki", tag: "TKD", rest: "30s" },
+                { move: "Yeop Chagi (Side Kick)", detail: "4 set × 8 reps/kaki", tag: "TKD", rest: "30s" },
+                { move: "Jab + Roundhouse Combo", detail: "5 round × 1 menit", tag: "TKD", rest: "45s" }
               ]},
               { title: "KONDISIONING", items: [
-                { move: "Burpee", detail: "3 set × 10 reps", tag: "KONDISI" },
-                { move: "Mountain Climber", detail: "3 set × 30 detik", tag: "KONDISI" }
+                { move: "Burpee", detail: "3 set × 12 reps", tag: "KONDISI", rest: "45s" },
+                { move: "Mountain Climber", detail: "3 set × 30 detik", tag: "KONDISI", rest: "30s" }
               ]}
             ]
           }
@@ -548,43 +570,44 @@
         day: "RAB", full: "RABU", theme: "PULL & CORE", sub: "HSPU Skill + Boxing", color: "#39FF14",
         sessions: [
           {
-            time: "🌅 PAGI", label: "PULL + CORE", duration: "60 MENIT",
+            time: "🌅 PAGI", label: "PULL + CORE", duration: "60 MENIT", restDuration: "45 MIN",
             blocks: [
               { title: "MORNING PRIMER", items: [
-                { move: "Push-up", detail: "1 set × MAX reps", tag: "PRIMER" },
-                { move: "Pull-up", detail: "1 set × MAX reps", tag: "PRIMER" },
-                { move: "Dips (kursi)", detail: "1 set × MAX reps", tag: "PRIMER" }
+                { move: "Push-up", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
+                { move: "Pull-up", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
+                { move: "Dips (kursi)", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
+                { move: "Pistol Squat", detail: "1 set × MAX reps/kaki", tag: "PRIMER", rest: "60s" }
               ]},
-              { title: "HSPU SKILL BLOCK", note: "Progress dari Senin: naikkan intensitas sedikit", items: [
-                { move: "Wall Kick-up + Hold", detail: "10 attempts (20+ det)", tag: "SKILL" },
-                { move: "Handstand Wall Shoulder Tap", detail: "4 set × 8 taps", tag: "SKILL" },
-                { move: "Eccentric Pike Push-up", detail: "4 set × 5 reps (lambat)", tag: "SKILL" }
+              { title: "HSPU SKILL BLOCK", note: "Progress dari Senin: naikkan intensitas.", items: [
+                { move: "Wall Kick-up + Hold", detail: "10 set × 20 detik", tag: "SKILL", rest: "45s" },
+                { move: "Handstand Wall Shoulder Tap", detail: "4 set × 8 taps", tag: "SKILL", rest: "60s" },
+                { move: "Eccentric Pike Push-up", detail: "4 set × 5 reps", tag: "SKILL", rest: "90s" }
               ]},
-              { title: "PULL STRENGTH", note: "Istirahat 2 menit antar set pull-up", items: [
-                { move: "Pull-up", detail: "4 set × MAX reps", tag: "STR" },
-                { move: "Chin-up", detail: "3 set × 8 reps", tag: "STR" },
-                { move: "Australian Row (bawah meja)", detail: "4 set × 12 reps", tag: "STR" },
-                { move: "Commando Pull-up", detail: "3 set × 6 reps/sisi", tag: "STR" }
+              { title: "PULL STRENGTH", note: "Gerakan eksentrik terkontrol.", items: [
+                { move: "Pull-up", detail: "4 set × 10 reps", tag: "STR", rest: "120s" },
+                { move: "Chin-up", detail: "3 set × 8 reps", tag: "STR", rest: "90s" },
+                { move: "Australian Row (bawah meja)", detail: "4 set × 12 reps", tag: "STR", rest: "60s" },
+                { move: "Commando Pull-up", detail: "3 set × 6 reps/sisi", tag: "STR", rest: "90s" }
               ]},
-              { title: "CORE BLOCK", note: "Istirahat 45 detik", items: [
-                { move: "L-sit Hold (lantai/kursi)", detail: "4 set × 15 detik", tag: "CORE" },
-                { move: "Hollow Body Hold", detail: "3 set × 30 detik", tag: "CORE" },
-                { move: "Dragon Flag Negative", detail: "3 set × 5 reps", tag: "CORE" }
+              { title: "CORE BLOCK", note: "Fokus stabilitas.", items: [
+                { move: "L-sit Hold (lantai/kursi)", detail: "4 set × 15 detik", tag: "CORE", rest: "45s" },
+                { move: "Hollow Body Hold", detail: "3 set × 30 detik", tag: "CORE", rest: "45s" },
+                { move: "Dragon Flag Negative", detail: "3 set × 5 reps", tag: "CORE", rest: "60s" }
               ]}
             ]
           },
           {
-            time: "🌆 SORE", label: "BOXING", duration: "60 MENIT",
+            time: "🌆 SORE", label: "BOXING", duration: "60 MENIT", restDuration: "15 MIN",
             blocks: [
-              { title: "WARM-UP", items: [ { move: "Footwork Ladder Drill", detail: "10 menit", tag: "WARMUP" } ]},
-              { title: "BOXING — DEFENSE & COUNTER", note: "Fokus minggu ini: slip + counter punch", items: [
-                { move: "Slip + Cross Counter", detail: "5 round × 2 menit", tag: "BOKS" },
-                { move: "Parry + Jab", detail: "3 round × 1 menit", tag: "BOKS" },
-                { move: "Roll + Uppercut", detail: "3 round × 1 menit", tag: "BOKS" },
-                { move: "Freestyle Shadow Boxing", detail: "3 round × 2 menit", tag: "BOKS" }
+              { title: "WARM-UP", items: [ { move: "Footwork Ladder Drill", detail: "10 menit", tag: "WARMUP", rest: "None" } ]},
+              { title: "BOXING — DEFENSE & COUNTER", note: "Fokus minggu ini: slip + counter punch.", items: [
+                { move: "Slip + Cross Counter", detail: "5 round × 2 menit", tag: "BOKS", rest: "60s" },
+                { move: "Parry + Jab", detail: "3 round × 1 menit", tag: "BOKS", rest: "60s" },
+                { move: "Roll + Uppercut", detail: "3 round × 1 menit", tag: "BOKS", rest: "60s" },
+                { move: "Freestyle Shadow Boxing", detail: "3 round × 2 menit", tag: "BOKS", rest: "60s" }
               ]},
               { title: "KONDISIONING", items: [
-                { move: "Skipping", detail: "5 round × 1 menit (30 det rest)", tag: "KARDIO" }
+                { move: "Skipping", detail: "5 round × 1 menit", tag: "KARDIO", rest: "30s" }
               ]}
             ]
           }
@@ -594,31 +617,31 @@
         day: "KAM", full: "KAMIS", theme: "ACTIVE RECOVERY", sub: "Aerobik + Taekwondo", color: "#FFD700",
         sessions: [
           {
-            time: "🌅 PAGI", label: "CARDIO + MOBILITAS", duration: "50 MENIT",
+            time: "🌅 PAGI", label: "CARDIO + MOBILITAS", duration: "50 MENIT", restDuration: "5 MIN",
             blocks: [
-              { title: "AEROBIK BASE", note: "Pace santai — bisa ngobrol = pace tepat. Bukan hari mati-matian.", items: [
-                { move: "Easy Jog", detail: "20–25 menit @ santai", tag: "KARDIO" }
+              { title: "AEROBIK BASE", note: "Pace santai — bisa ngobrol = pace tepat.", items: [
+                { move: "Easy Jog", detail: "20 menit @ pace santai", tag: "KARDIO", rest: "None" }
               ]},
-              { title: "MOBILITY WORK", note: "Tahan setiap posisi 30–45 detik", items: [
-                { move: "Hip Flexor Stretch", detail: "3 × 45 detik/sisi", tag: "MOBIL" },
-                { move: "Thoracic Spine Rotation", detail: "2 × 10 reps/sisi", tag: "MOBIL" },
-                { move: "Shoulder Dislocate (handuk)", detail: "3 × 10 reps", tag: "MOBIL" },
-                { move: "Deep Squat Hold", detail: "3 × 45 detik", tag: "MOBIL" },
-                { move: "Pigeon Pose", detail: "2 × 60 detik/sisi", tag: "MOBIL" }
+              { title: "MOBILITY WORK", note: "Tahan setiap posisi dalam relaksasi.", items: [
+                { move: "Hip Flexor Stretch", detail: "3 set × 45 detik/sisi", tag: "MOBIL", rest: "15s" },
+                { move: "Thoracic Spine Rotation", detail: "2 set × 10 reps/sisi", tag: "MOBIL", rest: "15s" },
+                { move: "Shoulder Dislocate (handuk)", detail: "3 set × 10 reps", tag: "MOBIL", rest: "15s" },
+                { move: "Deep Squat Hold", detail: "3 set × 45 detik", tag: "MOBIL", rest: "30s" },
+                { move: "Pigeon Pose", detail: "2 set × 60 detik/sisi", tag: "MOBIL", rest: "15s" }
               ]}
             ]
           },
           {
-            time: "🌆 SORE", label: "TAEKWONDO", duration: "60 MENIT",
+            time: "🌆 SORE", label: "TAEKWONDO", duration: "60 MENIT", restDuration: "10 MIN",
             blocks: [
-              { title: "POOMSAE / PATTERN", note: "Fokus teknik bersih, bukan kecepatan", items: [
-                { move: "Taegeuk Pattern (Poomsae)", detail: "5 × repetisi penuh", tag: "TKD" },
-                { move: "Slow-motion Kick Drill", detail: "3 set × 10 reps/kaki", tag: "TKD" }
+              { title: "POOMSAE / PATTERN", note: "Fokus teknik bersih, bukan kecepatan.", items: [
+                { move: "Taegeuk Pattern (Poomsae)", detail: "5 set × 1 repetisi penuh", tag: "TKD", rest: "30s" },
+                { move: "Slow-motion Kick Drill", detail: "3 set × 10 reps/kaki", tag: "TKD", rest: "45s" }
               ]},
-              { title: "FLEKSIBILITAS TENDANGAN", note: "Sesi ini seperti yoga — tidak ada terburu-buru", items: [
-                { move: "Standing Leg Raise", detail: "3 × 10 reps/kaki", tag: "TKD" },
-                { move: "Side Split Progression", detail: "5 menit hold progresif", tag: "MOBIL" },
-                { move: "Front Split Progression", detail: "5 menit hold progresif", tag: "MOBIL" }
+              { title: "FLEKSIBILITAS TENDANGAN", note: "Sesi relaksasi sendi.", items: [
+                { move: "Standing Leg Raise", detail: "3 set × 10 reps/kaki", tag: "TKD", rest: "30s" },
+                { move: "Side Split Progression", detail: "1 set × 5 menit hold", tag: "MOBIL", rest: "None" },
+                { move: "Front Split Progression", detail: "1 set × 5 menit hold", tag: "MOBIL", rest: "None" }
               ]}
             ]
           }
@@ -628,42 +651,43 @@
         day: "JUM", full: "JUMAT", theme: "FULL BODY POWER", sub: "HSPU Skill + Mixed MA", color: "#FF69B4",
         sessions: [
           {
-            time: "🌅 PAGI", label: "FULL BODY + HSPU", duration: "60 MENIT",
+            time: "🌅 PAGI", label: "FULL BODY + HSPU", duration: "60 MENIT", restDuration: "30 MIN",
             blocks: [
               { title: "MORNING PRIMER", items: [
-                { move: "Push-up", detail: "1 set × MAX reps", tag: "PRIMER" },
-                { move: "Pull-up", detail: "1 set × MAX reps", tag: "PRIMER" },
-                { move: "Dips (kursi)", detail: "1 set × MAX reps", tag: "PRIMER" }
+                { move: "Push-up", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
+                { move: "Pull-up", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
+                { move: "Dips (kursi)", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
+                { move: "Pistol Squat", detail: "1 set × MAX reps/kaki", tag: "PRIMER", rest: "60s" }
               ]},
-              { title: "HSPU SKILL — CHECK", note: "Ini hari tes: coba 1 rep HSPU dengan dinding.", items: [
-                { move: "Wall HSPU Negative (5 det turun)", detail: "5 set × 3 reps", tag: "SKILL" },
-                { move: "Elevated Pike Push-up", detail: "4 set × 6 reps", tag: "SKILL" },
-                { move: "Handstand Wall Hold", detail: "3 set × 40 detik", tag: "SKILL" }
+              { title: "HSPU SKILL — CHECK", note: "Hari tes mental. Berani coba dinding?", items: [
+                { move: "Wall HSPU Negative", detail: "5 set × 3 reps", tag: "SKILL", rest: "120s" },
+                { move: "Elevated Pike Push-up", detail: "4 set × 8 reps", tag: "SKILL", rest: "90s" },
+                { move: "Handstand Wall Hold", detail: "3 set × 40 detik", tag: "SKILL", rest: "60s" }
               ]},
-              { title: "FULL BODY CIRCUIT", note: "Selesaikan circuit, lalu istirahat 2 menit. × 4 round.", items: [
-                { move: "Pull-up", detail: "MAX reps per round", tag: "STR" },
-                { move: "Dips", detail: "10 reps per round", tag: "STR" },
-                { move: "Push-up", detail: "15 reps per round", tag: "STR" },
-                { move: "Jump Squat", detail: "12 reps per round", tag: "POWER" },
-                { move: "L-sit Hold", detail: "20 detik per round", tag: "CORE" }
+              { title: "FULL BODY CIRCUIT", note: "Lakukan berurutan. Setelah 1 putaran, istirahat 120 detik.", items: [
+                { move: "Pull-up", detail: "4 round × 8 reps", tag: "STR", rest: "None" },
+                { move: "Dips", detail: "4 round × 10 reps", tag: "STR", rest: "None" },
+                { move: "Push-up", detail: "4 round × 15 reps", tag: "STR", rest: "None" },
+                { move: "Jump Squat", detail: "4 round × 12 reps", tag: "POWER", rest: "None" },
+                { move: "L-sit Hold", detail: "4 round × 20 detik", tag: "CORE", rest: "120s" }
               ]},
               { title: "CARDIO FINISHER", items: [
-                { move: "Skipping", detail: "5 round × 1 menit", tag: "KARDIO" }
+                { move: "Skipping", detail: "5 round × 1 menit", tag: "KARDIO", rest: "30s" }
               ]}
             ]
           },
           {
-            time: "🌆 SORE", label: "MIXED MARTIAL ARTS", duration: "60 MENIT",
+            time: "🌆 SORE", label: "MIXED MARTIAL ARTS", duration: "60 MENIT", restDuration: "18 MIN",
             blocks: [
-              { title: "WARM-UP", items: [ { move: "Shadow Boxing + Tendangan", detail: "10 menit", tag: "WARMUP" } ]},
-              { title: "BOXING + TKD FUSION", note: "Gabungkan teknik kedua disiplin dalam satu kombinasi", items: [
-                { move: "Jab–Cross–Roundhouse Kick", detail: "5 round × 2 menit", tag: "FUSION" },
-                { move: "Slip–Counter–Side Kick", detail: "4 round × 1 menit", tag: "FUSION" },
-                { move: "Footwork Box Drill", detail: "3 round × 2 menit", tag: "FUSION" }
+              { title: "WARM-UP", items: [ { move: "Shadow Boxing + Tendangan", detail: "10 menit", tag: "WARMUP", rest: "None" } ]},
+              { title: "BOXING + TKD FUSION", note: "Gabungkan teknik kedua disiplin.", items: [
+                { move: "Jab–Cross–Roundhouse Kick", detail: "5 round × 2 menit", tag: "FUSION", rest: "60s" },
+                { move: "Slip–Counter–Side Kick", detail: "4 round × 1 menit", tag: "FUSION", rest: "60s" },
+                { move: "Footwork Box Drill", detail: "3 round × 2 menit", tag: "FUSION", rest: "60s" }
               ]},
               { title: "KONDISIONING", items: [
-                { move: "Burpee", detail: "4 set × 10 reps", tag: "KONDISI" },
-                { move: "Sprint di Tempat (High Knees)", detail: "5 × 30 detik", tag: "KONDISI" }
+                { move: "Burpee", detail: "4 set × 10 reps", tag: "KONDISI", rest: "45s" },
+                { move: "Sprint di Tempat (High Knees)", detail: "5 set × 30 detik", tag: "KONDISI", rest: "30s" }
               ]}
             ]
           }
@@ -673,32 +697,33 @@
         day: "SAB", full: "SABTU", theme: "WAR MODE", sub: "Full Conditioning Day", color: "#FF4500",
         sessions: [
           {
-            time: "🌅 PAGI", label: "KONDISIONING KERAS", duration: "60 MENIT",
+            time: "🌅 PAGI", label: "KONDISIONING KERAS", duration: "60 MENIT", restDuration: "5 MIN",
             blocks: [
-              { title: "RUNNING — PUSH LIMIT", note: "Target: 2.5 km. Jika belum bisa, jalan cepat bagian akhir.", items: [
-                { move: "Continuous Run", detail: "Target 2.5 km", tag: "KARDIO" }
+              { title: "RUNNING — PUSH LIMIT", note: "Target: 2.5 km konstan.", items: [
+                { move: "Continuous Run", detail: "Target 2.5 km", tag: "KARDIO", rest: "None" }
               ]},
-              { title: "METCON CIRCUIT", note: "3 round. Istirahat 90 detik antar round.", items: [
-                { move: "Burpee Pull-up", detail: "3 set × 8 reps", tag: "POWER" },
-                { move: "Jump Squat", detail: "3 set × 15 reps", tag: "POWER" },
-                { move: "Push-up", detail: "3 set × 20 reps", tag: "STR" },
-                { move: "Skipping", detail: "3 × 3 menit", tag: "KARDIO" }
+              { title: "METCON CIRCUIT", note: "Istirahat 90 detik HANYA setelah skipping.", items: [
+                { move: "Burpee Pull-up", detail: "3 round × 8 reps", tag: "POWER", rest: "None" },
+                { move: "Jump Squat", detail: "3 round × 15 reps", tag: "POWER", rest: "None" },
+                { move: "Push-up", detail: "3 round × 20 reps", tag: "STR", rest: "None" },
+                { move: "Skipping", detail: "3 round × 3 menit", tag: "KARDIO", rest: "90s" }
               ]},
-              { title: "SPRINT FINISHER", note: "Keluar semua yang ada", items: [
-                { move: "Sprint Interval", detail: "8 × 15 detik sprint / 45 detik jalan", tag: "KARDIO" }
+              { title: "INDOOR FINISHER (TABATA)", note: "Pengganti sprint. Lakukan di tempat tanpa jeda panjang.", items: [
+                { move: "High Knees", detail: "8 round × 20 detik", tag: "KARDIO", rest: "10s" },
+                { move: "Mountain Climber", detail: "8 round × 20 detik", tag: "KONDISI", rest: "10s" }
               ]}
             ]
           },
           {
-            time: "🌆 SORE", label: "SPARRING & TEKNIK BEBAS", duration: "60 MENIT",
+            time: "🌆 SORE", label: "SPARRING & TEKNIK BEBAS", duration: "60 MENIT", restDuration: "15 MIN",
             blocks: [
-              { title: "OPEN TECHNIQUE", note: "Sesi bebas — latih apa yang terasa perlu diperbaiki minggu ini", items: [
-                { move: "Shadow Sparring — Boxing Focus", detail: "4 round × 3 menit", tag: "BOKS" },
-                { move: "Shadow Sparring — TKD Focus", detail: "4 round × 3 menit", tag: "TKD" },
-                { move: "Combo Kreasi Sendiri", detail: "5 round × 2 menit", tag: "FUSION" }
+              { title: "OPEN TECHNIQUE", note: "Sesi bebas mengasah feeling.", items: [
+                { move: "Shadow Sparring — Boxing Focus", detail: "4 round × 3 menit", tag: "BOKS", rest: "60s" },
+                { move: "Shadow Sparring — TKD Focus", detail: "4 round × 3 menit", tag: "TKD", rest: "60s" },
+                { move: "Combo Kreasi Sendiri", detail: "5 round × 2 menit", tag: "FUSION", rest: "60s" }
               ]},
               { title: "RECOVERY ACTIVE", items: [
-                { move: "Full Body Stretch", detail: "15 menit", tag: "MOBIL" }
+                { move: "Full Body Stretch", detail: "15 menit santai", tag: "MOBIL", rest: "None" }
               ]}
             ]
           }
@@ -710,8 +735,6 @@
       }
     ];
 
-    // --- State Management ---
-    // Start at current day (0=Senin, 6=Minggu)
     let todayObj = new Date().getDay();
     let currentDayIndex = todayObj === 0 ? 6 : todayObj - 1; 
     const realTodayIndex = currentDayIndex;
@@ -720,7 +743,6 @@
     const appContent = document.getElementById('appContent');
     const rootStyle = document.documentElement.style;
 
-    // --- Render Functions ---
     function init() {
       updateTime();
       setInterval(updateTime, 1000);
@@ -752,27 +774,37 @@
       }).join('');
     }
 
+    // Mengkonversi HEX ke format RGB untuk dipakai di variable CSS (neon effect)
+    function hexToRgb(hex) {
+      let r = 0, g = 0, b = 0;
+      if (hex.length === 7) {
+        r = parseInt(hex.substring(1, 3), 16);
+        g = parseInt(hex.substring(3, 5), 16);
+        b = parseInt(hex.substring(5, 7), 16);
+      }
+      return `${r}, ${g}, ${b}`;
+    }
+
     function setDay(index) {
       currentDayIndex = index;
       const d = daysData[index];
 
-      // Update CSS Variables & Header
+      // Update Root Variables
       rootStyle.setProperty('--accent', d.color);
+      rootStyle.setProperty('--accent-rgb', hexToRgb(d.color));
+      
       document.getElementById('headerLevelVal').style.color = d.color;
       document.getElementById('brand-dot').style.color = d.color;
       
-      // Update bullets notes color
       for(let i=1; i<=5; i++){
           document.getElementById('noteBullet'+i).style.color = d.color;
       }
 
-      // Update Nav Active State
       document.querySelectorAll('.day-btn').forEach((btn, i) => {
         if (i === index) btn.classList.add('active');
         else btn.classList.remove('active');
       });
 
-      // Render Content
       if (d.isRest) {
         appContent.innerHTML = `
           <div class="day-content rest-day-msg">
@@ -802,10 +834,24 @@
         `;
       }
       
-      // Reset animation
       appContent.style.animation = 'none';
-      appContent.offsetHeight; /* trigger reflow */
+      appContent.offsetHeight; 
       appContent.style.animation = null;
+    }
+
+    // Parser cerdas untuk memformat detail Sets x Reps menjadi Metric Box
+    function formatMetrics(detail) {
+      const parsePart = (str) => {
+         const m = str.trim().match(/^([\d\.]+|MAX)\s+(.+)$/i);
+         if(m) return `<div class="metric-box"><span class="m-val">${m[1]}</span><span class="m-lbl">${m[2]}</span></div>`;
+         return `<div class="metric-box"><span class="m-text">${str.trim()}</span></div>`;
+      };
+
+      if(!detail.includes('×')) {
+         return `<div class="metrics-group">${parsePart(detail)}</div>`;
+      }
+      const parts = detail.split('×');
+      return `<div class="metrics-group">${parsePart(parts[0])}<span class="metric-divider">×</span>${parsePart(parts[1])}</div>`;
     }
 
     function renderSession(session) {
@@ -814,7 +860,10 @@
           <div class="session-header is-open">
             <div class="session-header-left">
               <div class="session-name">${session.time} — ${session.label}</div>
-              <div class="session-duration">${session.duration}</div>
+              <div class="session-badges">
+                <div class="session-badge">${session.duration}</div>
+                ${session.restDuration ? `<div class="session-badge rest-badge-header">⏱ REST ${session.restDuration}</div>` : ''}
+              </div>
             </div>
             <div class="session-toggle-icon">▼</div>
           </div>
@@ -830,6 +879,9 @@
     function renderBlock(block) {
       const itemsHtml = block.items.map(item => {
         const tc = tagColors[item.tag] || tagColors.WARMUP;
+        const restHtml = item.rest && item.rest !== "None" ? `<div class="rest-badge">${item.rest}</div>` : '';
+        const metricsHtml = formatMetrics(item.detail);
+        
         return `
           <div class="exercise-item">
             <div class="exercise-left">
@@ -838,7 +890,10 @@
               </span>
               <span class="exercise-name">${item.move}</span>
             </div>
-            <span class="exercise-detail">${item.detail}</span>
+            <div class="exercise-right">
+              ${metricsHtml}
+              ${restHtml}
+            </div>
           </div>
         `;
       }).join('');
@@ -863,48 +918,30 @@
 
     function setupGlobalListeners() {
       document.addEventListener('click', (e) => {
-        // Handle Day Navigation
         const dayBtn = e.target.closest('.day-btn');
         if (dayBtn) {
           const idx = parseInt(dayBtn.getAttribute('data-idx'));
-          if (!isNaN(idx) && idx !== currentDayIndex) {
-            setDay(idx);
-          }
+          if (!isNaN(idx) && idx !== currentDayIndex) setDay(idx);
         }
 
-        // Handle Block Accordion Toggle
         const blockHeader = e.target.closest('.block-header');
         if (blockHeader) {
           const wrapper = blockHeader.nextElementSibling;
           const isOpen = blockHeader.classList.contains('is-open');
-          
-          if (isOpen) {
-            blockHeader.classList.remove('is-open');
-            wrapper.classList.add('closed');
-          } else {
-            blockHeader.classList.add('is-open');
-            wrapper.classList.remove('closed');
-          }
+          if (isOpen) { blockHeader.classList.remove('is-open'); wrapper.classList.add('closed'); } 
+          else { blockHeader.classList.add('is-open'); wrapper.classList.remove('closed'); }
         }
 
-        // Handle Session Accordion Toggle
         const sessionHeader = e.target.closest('.session-header');
         if (sessionHeader) {
           const wrapper = sessionHeader.nextElementSibling;
           const isOpen = sessionHeader.classList.contains('is-open');
-
-          if (isOpen) {
-            sessionHeader.classList.remove('is-open');
-            wrapper.classList.add('closed');
-          } else {
-            sessionHeader.classList.add('is-open');
-            wrapper.classList.remove('closed');
-          }
+          if (isOpen) { sessionHeader.classList.remove('is-open'); wrapper.classList.add('closed'); } 
+          else { sessionHeader.classList.add('is-open'); wrapper.classList.remove('closed'); }
         }
       });
     }
 
-    // Run
     init();
   </script>
 </body>
