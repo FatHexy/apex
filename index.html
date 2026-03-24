@@ -4,6 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>APEX ELITE — Protocol</title>
+  
+  <!-- App Icons and PWA Meta Tags -->
+  <link rel="icon" href="https://raw.githubusercontent.com/FatHexy/apex/refs/heads/main/APEX_logo_design_202603250139.jpeg" type="image/jpeg">
+  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/FatHexy/apex/refs/heads/main/APEX_logo_design_202603250139.jpeg">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="APEX ELITE">
+  <meta name="theme-color" content="#050505">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
@@ -19,350 +28,125 @@
       --text-muted: #666;
       --text-dark: #444;
       --accent: #FF4500;
-      --accent-rgb: 255, 69, 0; /* Fallback RGB default */
+      --accent-rgb: 255, 69, 0; 
       --font-display: 'Barlow Condensed', sans-serif;
       --font-body: 'Barlow', sans-serif;
       --font-cyber: 'Orbitron', sans-serif;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background-color: var(--bg-base);
-      color: var(--text-main);
-      font-family: var(--font-body);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: var(--bg-base); color: var(--text-main); font-family: var(--font-body); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; min-height: 100vh; display: flex; justify-content: center; }
     ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-    .app-container {
-      width: 100%;
-      max-width: 600px;
-      background-color: var(--bg-surface);
-      position: relative;
-      box-shadow: 0 0 80px rgba(0, 0, 0, 0.8);
-      border-left: 1px solid var(--border-light);
-      border-right: 1px solid var(--border-light);
-      display: flex;
-      flex-direction: column;
-    }
+    .app-container { width: 100%; max-width: 600px; background-color: var(--bg-surface); position: relative; box-shadow: 0 0 80px rgba(0, 0, 0, 0.8); border-left: 1px solid var(--border-light); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; overflow: hidden; }
 
-    /* --- Sticky Top Bar --- */
-    .sticky-top-bar {
-      position: sticky;
-      top: 0;
-      z-index: 200;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 24px;
-      background: rgba(10, 10, 10, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border-light);
-    }
+    /* --- Sections --- */
+    .sticky-top-bar { position: sticky; top: 0; z-index: 200; display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-light); }
     .brand { font-family: var(--font-display); font-size: 16px; font-weight: 800; letter-spacing: 0.1em; color: #fff; }
     .live-status { display: flex; align-items: center; gap: 12px; }
     #live-time { font-family: monospace; font-size: 12px; color: var(--text-muted); letter-spacing: 0.1em; }
     .today-badge { font-family: var(--font-display); font-size: 10px; font-weight: 800; letter-spacing: 0.15em; color: #000; background: var(--accent); padding: 4px 8px; border-radius: 3px; transition: background 0.4s ease; }
 
-    /* --- Global Header --- */
-    .global-header {
-      padding: 32px 24px 24px;
-      border-bottom: 3px solid var(--accent);
-      background: linear-gradient(180deg, #111 0%, #0a0a0a 100%);
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.4s ease;
-    }
-
-    .header-glow {
-      position: absolute;
-      top: -50%; right: -35%;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
-      opacity: 0.15;
-      pointer-events: none;
-      transition: background 0.4s ease;
-    }
-
-    .header-content {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-
+    .global-header { padding: 32px 24px 24px; border-bottom: 3px solid var(--accent); background: linear-gradient(180deg, #111 0%, #0a0a0a 100%); position: relative; overflow: hidden; transition: border-color 0.4s ease; }
+    .header-glow { position: absolute; top: -50%; right: -35%; width: 500px; height: 500px; background: radial-gradient(circle, var(--accent) 0%, transparent 70%); opacity: 0.15; pointer-events: none; transition: background 0.4s ease; }
+    .header-content { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; }
     .pre-title { font-family: var(--font-display); font-size: 11px; letter-spacing: 0.25em; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; }
     .main-title { font-family: var(--font-display); font-size: 38px; font-weight: 900; letter-spacing: 0.04em; line-height: 1; color: #fff; }
     .sub-title { font-size: 13px; color: var(--text-muted); margin-top: 8px; font-weight: 500; }
-    
     .level-badge { text-align: right; }
     .level-label { font-family: var(--font-display); font-size: 11px; color: var(--text-dark); letter-spacing: 0.2em; }
     .level-value { font-family: var(--font-display); font-size: 22px; font-weight: 800; color: var(--accent); transition: color 0.4s ease; }
 
-    /* --- Day Selector --- */
-    .day-selector-wrap {
-      background: #0c0c0c;
-      border-bottom: 1px solid var(--border-light);
-      padding: 16px 24px;
-    }
-
-    .day-selector {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      scrollbar-width: none;
-      padding: 10px 4px; 
-      margin: -10px -4px; 
-    }
+    .day-selector-wrap { background: #0c0c0c; border-bottom: 1px solid var(--border-light); padding: 16px 24px; }
+    .day-selector { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 10px 4px; margin: -10px -4px; }
     .day-selector::-webkit-scrollbar { display: none; }
-
-    .day-btn {
-      flex: 1;
-      min-width: 60px;
-      padding: 10px 4px;
-      background: #141414;
-      color: var(--text-muted);
-      border: 1px solid var(--border-light);
-      border-radius: 6px;
-      font-family: var(--font-display);
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      user-select: none;
-      position: relative;
-    }
-
-    .day-btn:hover:not(:disabled) {
-      transform: translateY(-2px);
-      filter: brightness(1.3);
-      border-color: var(--border-focus);
-    }
-
-    .day-btn.active {
-      background: var(--accent);
-      color: #000;
-      border-color: var(--accent);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      transform: translateY(-2px);
-    }
-
+    .day-btn { flex: 1; min-width: 60px; padding: 10px 4px; background: #141414; color: var(--text-muted); border: 1px solid var(--border-light); border-radius: 6px; font-family: var(--font-display); cursor: pointer; text-align: center; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); user-select: none; position: relative; }
+    .day-btn:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.3); border-color: var(--border-focus); }
+    .day-btn.active { background: var(--accent); color: #000; border-color: var(--accent); box-shadow: 0 4px 15px rgba(0,0,0,0.3); transform: translateY(-2px); }
     .day-btn.active:hover:not(:disabled) { filter: brightness(0.9); }
-
     .day-btn .day-name { font-weight: 800; font-size: 14px; letter-spacing: 0.1em; }
     .day-btn .day-theme { font-size: 9px; font-weight: 700; margin-top: 2px; opacity: 0.8; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 4px;}
+    .day-today-marker { position: absolute; top: -8px; right: -4px; background: var(--accent); color: #000; font-size: 8px; font-weight: 800; padding: 3px 5px; border-radius: 4px; letter-spacing: 0.05em; font-family: var(--font-display); box-shadow: 0 2px 6px rgba(0,0,0,0.8); z-index: 10; }
 
-    .day-today-marker {
-      position: absolute;
-      top: -8px;
-      right: -4px;
-      background: var(--accent);
-      color: #000;
-      font-size: 8px;
-      font-weight: 800;
-      padding: 3px 5px;
-      border-radius: 4px;
-      letter-spacing: 0.05em;
-      font-family: var(--font-display);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.8);
-      z-index: 10;
-    }
-
-    .day-btn:disabled { cursor: not-allowed; opacity: 0.5; background: #080808; color: #333; }
-
-    /* --- Day Content Area --- */
     .day-content { animation: fadeIn 0.4s ease forwards; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .active-day-header {
-      padding: 24px 24px 16px;
-      background: var(--bg-surface);
-      border-bottom: 1px solid var(--border-light);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .active-day-title { 
-      font-family: var(--font-cyber); 
-      font-size: 40px; 
-      font-weight: 900; 
-      color: #fff; 
-      line-height: 1; 
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      text-shadow: 0 0 12px var(--accent), 0 0 24px var(--accent);
-    }
+    .active-day-header { padding: 24px 24px 16px; background: var(--bg-surface); border-bottom: 1px solid var(--border-light); display: flex; flex-direction: column; gap: 12px; }
+    .active-day-title { font-family: var(--font-cyber); font-size: 40px; font-weight: 900; color: #fff; line-height: 1; letter-spacing: 0.05em; text-transform: uppercase; text-shadow: 0 0 12px var(--accent), 0 0 24px var(--accent); }
     .active-day-theme { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #fff; letter-spacing: 0.06em; line-height: 1.2;}
     .active-day-sub { font-family: var(--font-display); font-size: 13px; color: var(--text-muted); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 4px;}
-
     .today-label { font-family: var(--font-display); font-size: 11px; letter-spacing: 0.25em; color: var(--text-muted); font-weight: 700;}
     .today-label.is-today { color: var(--accent); transition: color 0.4s ease; }
     .active-day-title-wrap { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
 
-    /* --- Sessions --- */
-    .sessions-container {
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    .session-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-light);
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    }
-
-    .session-header {
-      padding: 14px 20px;
-      background: #111;
-      border-bottom: 1px solid var(--border-light);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      user-select: none;
-      transition: background 0.2s ease;
-    }
+    .sessions-container { padding: 24px; display: flex; flex-direction: column; gap: 24px; }
+    .session-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+    .session-header { padding: 14px 20px; background: #111; border-bottom: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; transition: background 0.2s ease; gap: 12px;}
     .session-header:hover { background: #181818; }
     .session-header.is-open { border-bottom: 1px solid var(--border-light); }
     .session-header:not(.is-open) { border-bottom: none; }
-
-    .session-header-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-    .session-name { font-family: var(--font-display); font-size: 18px; font-weight: 800; color: #fff; letter-spacing: 0.08em; }
+    .session-header-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; flex: 1; }
+    .session-name { font-family: var(--font-display); font-size: 18px; font-weight: 800; color: #fff; letter-spacing: 0.08em; display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
     
     .session-badges { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-    .session-badge { 
-      font-family: var(--font-display); font-size: 11px; color: var(--accent); border: 1px solid var(--accent); 
-      padding: 3px 8px; border-radius: 4px; letter-spacing: 0.1em; font-weight: 700; background: rgba(255,255,255,0.02);
-    }
-    .session-badge.rest-badge-header {
-      color: #aaa;
-      border-color: #444;
-    }
+    .session-badge { font-family: var(--font-display); font-size: 11px; color: var(--accent); border: 1px solid var(--accent); padding: 3px 8px; border-radius: 4px; letter-spacing: 0.1em; font-weight: 700; background: rgba(255,255,255,0.02); display: flex; align-items: center;}
+    .session-badge.rest-badge-header { color: #aaa; border-color: #444; }
 
-    .session-toggle-icon { font-size: 14px; color: var(--text-muted); font-family: monospace; transition: transform 0.3s ease; }
+    .session-toggle-icon { font-size: 14px; color: var(--text-muted); font-family: monospace; transition: transform 0.3s ease; margin-left: auto; }
     .session-header.is-open .session-toggle-icon { transform: rotate(180deg); color: var(--accent); }
 
     .session-body-wrapper { display: grid; grid-template-rows: 1fr; transition: grid-template-rows 0.3s ease; }
     .session-body-wrapper.closed { grid-template-rows: 0fr; }
     .session-body-inner { overflow: hidden; }
 
-    /* --- Blocks (Accordion) --- */
     .blocks-container { padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; }
-
-    .block {
-      border: 1px solid var(--border-light);
-      border-radius: 6px;
-      background: #0f0f0f;
-      overflow: hidden;
-      transition: border-color 0.2s ease;
-    }
-
-    .block-header {
-      padding: 12px 16px;
-      background: #131313;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      user-select: none;
-      transition: background 0.2s ease;
-    }
-
+    .block { border: 1px solid var(--border-light); border-radius: 6px; background: #0f0f0f; overflow: hidden; transition: border-color 0.2s ease; }
+    .block-header { padding: 12px 16px; background: #131313; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; transition: background 0.2s ease; }
     .block-header:hover { background: #181818; }
     .block-header.is-open { border-bottom: 1px solid var(--border-light); }
-
     .block-title { font-family: var(--font-display); font-size: 15px; font-weight: 800; color: #ccc; letter-spacing: 0.12em; line-height: 1.3;}
-    .block-note { font-size: 11px; color: var(--text-muted); margin-top: 4px; font-weight: 400; line-height: 1.4; }
-    .block-toggle-icon { font-size: 12px; color: #555; font-family: monospace; transition: transform 0.3s ease; }
+    .block-note { font-size: 11px; color: var(--text-muted); margin-top: 4px; font-weight: 400; line-height: 1.4; min-height: 16px; }
+    .block-toggle-icon { font-size: 12px; color: #555; font-family: monospace; transition: transform 0.3s ease; margin-left: 12px;}
     .block-header.is-open .block-toggle-icon { transform: rotate(180deg); color: var(--text-main); }
 
     .block-items-wrapper { display: grid; grid-template-rows: 1fr; transition: grid-template-rows 0.3s ease; }
     .block-items-wrapper.closed { grid-template-rows: 0fr; }
     .block-items-inner { overflow: hidden; }
 
-    /* --- Exercise Items (Mobile Optimized) --- */
-    .exercise-item {
-      padding: 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      border-bottom: 1px solid #161616;
-      transition: background 0.15s ease;
-    }
+    .exercise-item { padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid #161616; transition: background 0.15s ease; }
     .exercise-item:last-child { border-bottom: none; }
     .exercise-item:hover { background: rgba(255,255,255,0.02); }
-
     .exercise-left { display: flex; align-items: flex-start; gap: 12px; flex: 1; min-width: 0; }
+    .exercise-tag { font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; padding: 3px 6px; border-radius: 3px; border: 1px solid; flex-shrink: 0; text-transform: uppercase; margin-top: 2px; }
+    .exercise-name { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: #ddd; letter-spacing: 0.02em; white-space: normal; line-height: 1.3; word-break: break-word; }
     
-    .exercise-tag {
-      font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
-      padding: 3px 6px; border-radius: 3px; border: 1px solid; flex-shrink: 0; text-transform: uppercase; margin-top: 2px;
-    }
-
-    .exercise-name { 
-      font-family: var(--font-display); font-size: 16px; font-weight: 600; color: #ddd; 
-      letter-spacing: 0.02em; white-space: normal; line-height: 1.3; word-break: break-word;
-    }
-
-    /* Tampilan Metrics Sets/Reps Premium */
-    .exercise-right {
-      display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0;
-    }
-
-    .metrics-group {
-      display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end;
-    }
-
-    .metric-box {
-      background: rgba(var(--accent-rgb), 0.05);
-      border: 1px solid rgba(var(--accent-rgb), 0.3);
-      border-radius: 4px;
-      padding: 3px 8px;
-      display: inline-flex;
-      align-items: baseline;
-      gap: 4px;
-      box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
-    }
-
+    .exercise-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
+    .metrics-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+    .metric-box { background: rgba(var(--accent-rgb), 0.05); border: 1px solid rgba(var(--accent-rgb), 0.3); border-radius: 4px; padding: 3px 8px; display: inline-flex; align-items: baseline; gap: 4px; box-shadow: inset 0 0 8px rgba(0,0,0,0.5); }
     .m-val { font-family: var(--font-cyber); font-size: 14px; font-weight: 700; color: var(--accent); }
     .m-lbl { font-family: var(--font-display); font-size: 11px; font-weight: 600; color: #999; letter-spacing: 0.1em; text-transform: uppercase; }
     .m-text { font-family: var(--font-display); font-size: 12px; font-weight: 600; color: #ccc; letter-spacing: 0.05em; text-transform: uppercase; }
     .metric-divider { font-size: 14px; color: #555; font-weight: 900; }
 
-    .rest-badge {
-      font-family: monospace; font-size: 11px; font-weight: 700; color: #aaa;
-      background: rgba(255,255,255,0.08); padding: 4px 6px; border-radius: 4px;
-      display: inline-flex; align-items: center; gap: 4px; border: 1px solid rgba(255,255,255,0.1);
-    }
+    .rest-badge { font-family: monospace; font-size: 11px; font-weight: 700; color: #aaa; background: rgba(255,255,255,0.08); padding: 4px 6px; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; border: 1px solid rgba(255,255,255,0.1); }
     .rest-badge::before { content: '⏱'; font-size: 10px; }
 
-    /* Media Query for Mobile */
+    .protocol-notes { margin: 0 24px 40px; padding: 24px; background: #0c0c0c; border: 1px solid var(--border-light); border-radius: 8px; position: relative; }
+    .protocol-notes::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--text-dark); border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
+    .notes-title { font-family: var(--font-display); font-size: 14px; color: var(--text-muted); letter-spacing: 0.25em; margin-bottom: 16px; font-weight: 700; }
+    .note-item { display: flex; gap: 12px; margin-bottom: 12px; font-size: 13px; line-height: 1.6; }
+    .note-item:last-child { margin-bottom: 0; }
+    .note-bullet { color: var(--accent); font-weight: 700; flex-shrink: 0; white-space: nowrap; transition: color 0.4s ease;}
+    .note-text { color: #888; flex: 1; min-height: 20px;}
+    
+    .rest-day-msg { text-align: center; padding: 60px 20px; }
+    .rest-day-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5;}
+    .rest-day-title { font-family: var(--font-display); font-size: 32px; color: #fff; margin-bottom: 8px; letter-spacing: 0.05em;}
+    .rest-day-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; max-width: 300px; margin: 0 auto; }
+
     @media (max-width: 480px) {
       .exercise-item { flex-direction: column; align-items: flex-start; gap: 12px; }
       .exercise-right { flex-direction: row; width: 100%; justify-content: space-between; align-items: center; padding-left: 0; margin-top: 4px;}
@@ -371,29 +155,6 @@
       .sessions-container { padding: 16px; }
       .protocol-notes { margin: 0 16px 40px; }
     }
-
-    /* --- Protocol Notes --- */
-    .protocol-notes {
-      margin: 0 24px 40px;
-      padding: 24px;
-      background: #0c0c0c;
-      border: 1px solid var(--border-light);
-      border-radius: 8px;
-      position: relative;
-    }
-
-    .protocol-notes::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--text-dark); border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
-    .notes-title { font-family: var(--font-display); font-size: 14px; color: var(--text-muted); letter-spacing: 0.25em; margin-bottom: 16px; font-weight: 700; }
-    .note-item { display: flex; gap: 12px; margin-bottom: 12px; font-size: 13px; line-height: 1.6; }
-    .note-item:last-child { margin-bottom: 0; }
-    .note-bullet { color: var(--accent); font-weight: 700; flex-shrink: 0; white-space: nowrap; transition: color 0.4s ease;}
-    .note-text { color: #888; }
-    
-    .rest-day-msg { text-align: center; padding: 60px 20px; }
-    .rest-day-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5;}
-    .rest-day-title { font-family: var(--font-display); font-size: 32px; color: #fff; margin-bottom: 8px; letter-spacing: 0.05em;}
-    .rest-day-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; max-width: 300px; margin: 0 auto; }
-
   </style>
 </head>
 <body>
@@ -408,59 +169,15 @@
       </div>
     </div>
 
-    <header class="global-header">
-      <div class="header-glow" id="headerGlow"></div>
-      <div class="header-content">
-        <div>
-          <div class="pre-title">ELITE ATHLETE PROGRAM · 22 YRS · INTERMEDIATE</div>
-          <div class="main-title">HSPU MASTERY</div>
-          <div class="sub-title">Kalistenik · Boxing · Taekwondo · Cardio</div>
-        </div>
-        <div class="level-badge">
-          <div class="level-label">LEVEL</div>
-          <div class="level-value" id="headerLevelVal">INTERMEDIATE+</div>
-          <div class="level-label" style="margin-top: 4px;">6 HARI/MINGGU</div>
-        </div>
-      </div>
-    </header>
-
-    <nav class="day-selector-wrap">
-      <div class="day-selector" id="daySelector">
-        <!-- Generated by JS -->
-      </div>
-    </nav>
-
-    <main id="appContent">
-      <!-- Generated by JS -->
-    </main>
-
-    <section class="protocol-notes">
-      <div class="notes-title">PROTOCOL NOTES</div>
-      <div class="note-item">
-        <div class="note-bullet" id="noteBullet1">— Morning Primer:</div>
-        <div class="note-text">Catat total reps setiap hari. Jika angkamu tidak naik 2 minggu berturut-turut, evaluasi recovery-mu.</div>
-      </div>
-      <div class="note-item">
-        <div class="note-bullet" id="noteBullet2">— HSPU Progression:</div>
-        <div class="note-text">Minggu 1–3: Elevated Pike Push-up. Minggu 4–6: Wall Negative HSPU. Minggu 7+: Full Wall HSPU attempts.</div>
-      </div>
-      <div class="note-item">
-        <div class="note-bullet" id="noteBullet3">— Running Base:</div>
-        <div class="note-text">Tambah 200–300m setiap minggu. Minggu 1 target 2.5 km, Bulan 2 target 4 km.</div>
-      </div>
-      <div class="note-item">
-        <div class="note-bullet" id="noteBullet4">— Beban Tambahan:</div>
-        <div class="note-text">Gunakan tas berisi buku/batu untuk squat. Tambah beban 5–10% setiap 2 minggu.</div>
-      </div>
-      <div class="note-item">
-        <div class="note-bullet" id="noteBullet5">— Recovery:</div>
-        <div class="note-text">Tidur 7–8 jam. Ini bagian dari program, bukan opsional. Istirahat total di hari Minggu.</div>
-      </div>
-    </section>
+    <header class="global-header" id="globalHeaderArea"></header>
+    <nav class="day-selector-wrap"><div class="day-selector" id="daySelector"></div></nav>
+    <main id="appContent"></main>
+    <section class="protocol-notes" id="notesArea"></section>
 
   </div>
 
   <script>
+    // --- DATA ---
     const tagColors = {
       PRIMER: { bg: "#1a0a00", text: "#FF8C00", border: "#FF8C00" },
       SKILL: { bg: "#001a0a", text: "#39FF14", border: "#39FF14" },
@@ -475,15 +192,31 @@
       ISOMETRIK: { bg: "#1a001a", text: "#DA70D6", border: "#DA70D6" },
       POWER: { bg: "#1a0800", text: "#FFA500", border: "#FFA500" },
       KONDISI: { bg: "#150005", text: "#FF6B6B", border: "#FF6B6B" },
+      REST: { bg: "#111", text: "#888", border: "#333" } 
     };
 
-    // Struktur detail sudah diperbarui agar parser dapat memisahkan angka dan huruf dengan rapi
+    const globalData = {
+      preTitle: "ELITE ATHLETE PROGRAM · 22 YRS · INTERMEDIATE",
+      mainTitle: "HSPU MASTERY",
+      subTitle: "Kalistenik · Boxing · Taekwondo · Cardio",
+      level: "INTERMEDIATE+",
+      frequency: "6 HARI/MINGGU"
+    };
+
+    const notesData = [
+      { title: "Morning Primer", text: "Catat total reps setiap hari. Jika angkamu tidak naik 2 minggu berturut-turut, evaluasi recovery-mu." },
+      { title: "HSPU Progression", text: "Minggu 1–3: Elevated Pike Push-up. Minggu 4–6: Wall Negative HSPU. Minggu 7+: Full Wall HSPU attempts." },
+      { title: "Running Base", text: "Tambah 200–300m setiap minggu. Minggu 1 target 2.5 km, Bulan 2 target 4 km." },
+      { title: "Beban Tambahan", text: "Gunakan tas berisi buku/batu untuk squat. Tambah beban 5–10% setiap 2 minggu." },
+      { title: "Recovery", text: "Tidur 7–8 jam. Ini bagian dari program, bukan opsional. Istirahat total di hari Minggu." }
+    ];
+
     const daysData = [
       {
         day: "SEN", full: "SENIN", theme: "PUSH DOMINANCE", sub: "HSPU Skill + Boxing", color: "#FF4500",
         sessions: [
           {
-            time: "🌅 PAGI", label: "SKILL & PUSH", duration: "60 MENIT", restDuration: "38 MIN",
+            time: "🌅 PAGI", label: "SKILL & PUSH", duration: "60 MENIT",
             blocks: [
               { title: "MORNING PRIMER", note: "Lakukan 1 set dengan repetisi semaksimal mungkin.", items: [
                 { move: "Push-up", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
@@ -493,7 +226,7 @@
               ]},
               { title: "HSPU SKILL BLOCK", note: "Fokus kualitas gerak, bukan kecepatan.", items: [
                 { move: "Wall Handstand Hold", detail: "5 set × 30 detik", tag: "SKILL", rest: "60s" },
-                { move: "Elevated Pike Push-up", detail: "4 set × 5 reps @ 3-1-3 tempo", tag: "SKILL", rest: "90s" },
+                { move: "Elevated Pike Push-up", detail: "4 set × 8 reps", tag: "SKILL", rest: "90s" },
                 { move: "Shoulder Wall Tap", detail: "3 set × 8 reps/sisi", tag: "SKILL", rest: "60s" }
               ]},
               { title: "PUSH STRENGTH", note: "Jaga form tetap solid.", items: [
@@ -508,7 +241,7 @@
             ]
           },
           {
-            time: "🌆 SORE", label: "BOXING", duration: "60 MENIT", restDuration: "18 MIN",
+            time: "🌆 SORE", label: "BOXING", duration: "60 MENIT",
             blocks: [
               { title: "WARM-UP", items: [ { move: "Shadow Boxing + Footwork", detail: "10 menit", tag: "WARMUP", rest: "None" } ]},
               { title: "BOXING TECHNIQUE", note: "Fokus kecepatan dan rotasi pinggul.", items: [
@@ -528,7 +261,7 @@
         day: "SEL", full: "SELASA", theme: "LEG POWER", sub: "Lower Body + Taekwondo", color: "#00BFFF",
         sessions: [
           {
-            time: "🌅 PAGI", label: "LOWER BODY", duration: "60 MENIT", restDuration: "25 MIN",
+            time: "🌅 PAGI", label: "LOWER BODY", duration: "60 MENIT",
             blocks: [
               { title: "MORNING PRIMER", note: "Lakukan set terbaikmu hari ini.", items: [
                 { move: "Push-up", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
@@ -543,12 +276,12 @@
                 { move: "Wall Sit", detail: "3 set × 45 detik", tag: "ISOMETRIK", rest: "60s" }
               ]},
               { title: "RUNNING INTERVALS", note: "Membangun base aerobik.", items: [
-                { move: "Interval Run", detail: "6 round × 30 det sprint", tag: "KARDIO", rest: "60s jog" }
+                { move: "Interval Run", detail: "6 round × 30 detik", tag: "KARDIO", rest: "60s" }
               ]}
             ]
           },
           {
-            time: "🌆 SORE", label: "TAEKWONDO", duration: "60 MENIT", restDuration: "15 MIN",
+            time: "🌆 SORE", label: "TAEKWONDO", duration: "60 MENIT",
             blocks: [
               { title: "WARM-UP", items: [ { move: "Dynamic Stretch + Leg Swing", detail: "10 menit", tag: "WARMUP", rest: "None" } ]},
               { title: "TAEKWONDO TECHNIQUE", note: "Kontrol dan kecepatan.", items: [
@@ -570,7 +303,7 @@
         day: "RAB", full: "RABU", theme: "PULL & CORE", sub: "HSPU Skill + Boxing", color: "#39FF14",
         sessions: [
           {
-            time: "🌅 PAGI", label: "PULL + CORE", duration: "60 MENIT", restDuration: "45 MIN",
+            time: "🌅 PAGI", label: "PULL + CORE", duration: "60 MENIT",
             blocks: [
               { title: "MORNING PRIMER", items: [
                 { move: "Push-up", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
@@ -597,7 +330,7 @@
             ]
           },
           {
-            time: "🌆 SORE", label: "BOXING", duration: "60 MENIT", restDuration: "15 MIN",
+            time: "🌆 SORE", label: "BOXING", duration: "60 MENIT",
             blocks: [
               { title: "WARM-UP", items: [ { move: "Footwork Ladder Drill", detail: "10 menit", tag: "WARMUP", rest: "None" } ]},
               { title: "BOXING — DEFENSE & COUNTER", note: "Fokus minggu ini: slip + counter punch.", items: [
@@ -617,31 +350,31 @@
         day: "KAM", full: "KAMIS", theme: "ACTIVE RECOVERY", sub: "Aerobik + Taekwondo", color: "#FFD700",
         sessions: [
           {
-            time: "🌅 PAGI", label: "CARDIO + MOBILITAS", duration: "50 MENIT", restDuration: "5 MIN",
+            time: "🌅 PAGI", label: "CARDIO + MOBILITAS", duration: "50 MENIT",
             blocks: [
               { title: "AEROBIK BASE", note: "Pace santai — bisa ngobrol = pace tepat.", items: [
-                { move: "Easy Jog", detail: "20 menit @ pace santai", tag: "KARDIO", rest: "None" }
+                { move: "Easy Jog", detail: "20 menit", tag: "KARDIO", rest: "None" }
               ]},
               { title: "MOBILITY WORK", note: "Tahan setiap posisi dalam relaksasi.", items: [
-                { move: "Hip Flexor Stretch", detail: "3 set × 45 detik/sisi", tag: "MOBIL", rest: "15s" },
-                { move: "Thoracic Spine Rotation", detail: "2 set × 10 reps/sisi", tag: "MOBIL", rest: "15s" },
+                { move: "Hip Flexor Stretch", detail: "3 set × 45 detik", tag: "MOBIL", rest: "15s" },
+                { move: "Thoracic Spine Rotation", detail: "2 set × 10 reps", tag: "MOBIL", rest: "15s" },
                 { move: "Shoulder Dislocate (handuk)", detail: "3 set × 10 reps", tag: "MOBIL", rest: "15s" },
                 { move: "Deep Squat Hold", detail: "3 set × 45 detik", tag: "MOBIL", rest: "30s" },
-                { move: "Pigeon Pose", detail: "2 set × 60 detik/sisi", tag: "MOBIL", rest: "15s" }
+                { move: "Pigeon Pose", detail: "2 set × 60 detik", tag: "MOBIL", rest: "15s" }
               ]}
             ]
           },
           {
-            time: "🌆 SORE", label: "TAEKWONDO", duration: "60 MENIT", restDuration: "10 MIN",
+            time: "🌆 SORE", label: "TAEKWONDO", duration: "60 MENIT",
             blocks: [
               { title: "POOMSAE / PATTERN", note: "Fokus teknik bersih, bukan kecepatan.", items: [
-                { move: "Taegeuk Pattern (Poomsae)", detail: "5 set × 1 repetisi penuh", tag: "TKD", rest: "30s" },
-                { move: "Slow-motion Kick Drill", detail: "3 set × 10 reps/kaki", tag: "TKD", rest: "45s" }
+                { move: "Taegeuk Pattern (Poomsae)", detail: "5 set × 1 reps", tag: "TKD", rest: "30s" },
+                { move: "Slow-motion Kick Drill", detail: "3 set × 10 reps", tag: "TKD", rest: "45s" }
               ]},
               { title: "FLEKSIBILITAS TENDANGAN", note: "Sesi relaksasi sendi.", items: [
-                { move: "Standing Leg Raise", detail: "3 set × 10 reps/kaki", tag: "TKD", rest: "30s" },
-                { move: "Side Split Progression", detail: "1 set × 5 menit hold", tag: "MOBIL", rest: "None" },
-                { move: "Front Split Progression", detail: "1 set × 5 menit hold", tag: "MOBIL", rest: "None" }
+                { move: "Standing Leg Raise", detail: "3 set × 10 reps", tag: "TKD", rest: "30s" },
+                { move: "Side Split Progression", detail: "1 set × 5 menit", tag: "MOBIL", rest: "None" },
+                { move: "Front Split Progression", detail: "1 set × 5 menit", tag: "MOBIL", rest: "None" }
               ]}
             ]
           }
@@ -651,13 +384,13 @@
         day: "JUM", full: "JUMAT", theme: "FULL BODY POWER", sub: "HSPU Skill + Mixed MA", color: "#FF69B4",
         sessions: [
           {
-            time: "🌅 PAGI", label: "FULL BODY + HSPU", duration: "60 MENIT", restDuration: "30 MIN",
+            time: "🌅 PAGI", label: "FULL BODY + HSPU", duration: "60 MENIT",
             blocks: [
               { title: "MORNING PRIMER", items: [
                 { move: "Push-up", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
                 { move: "Pull-up", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
                 { move: "Dips (kursi)", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
-                { move: "Pistol Squat", detail: "1 set × MAX reps/kaki", tag: "PRIMER", rest: "60s" }
+                { move: "Pistol Squat", detail: "1 set × MAX reps", tag: "PRIMER", rest: "60s" }
               ]},
               { title: "HSPU SKILL — CHECK", note: "Hari tes mental. Berani coba dinding?", items: [
                 { move: "Wall HSPU Negative", detail: "5 set × 3 reps", tag: "SKILL", rest: "120s" },
@@ -677,13 +410,13 @@
             ]
           },
           {
-            time: "🌆 SORE", label: "MIXED MARTIAL ARTS", duration: "60 MENIT", restDuration: "18 MIN",
+            time: "🌆 SORE", label: "MIXED MARTIAL ARTS", duration: "60 MENIT",
             blocks: [
               { title: "WARM-UP", items: [ { move: "Shadow Boxing + Tendangan", detail: "10 menit", tag: "WARMUP", rest: "None" } ]},
               { title: "BOXING + TKD FUSION", note: "Gabungkan teknik kedua disiplin.", items: [
                 { move: "Jab–Cross–Roundhouse Kick", detail: "5 round × 2 menit", tag: "FUSION", rest: "60s" },
                 { move: "Slip–Counter–Side Kick", detail: "4 round × 1 menit", tag: "FUSION", rest: "60s" },
-                { move: "Footwork Box Drill", detail: "3 round × 2  menit", tag: "FUSION", rest: "60s" }
+                { move: "Footwork Box Drill", detail: "3 round × 2 menit", tag: "FUSION", rest: "60s" }
               ]},
               { title: "KONDISIONING", items: [
                 { move: "Burpee", detail: "4 set × 10 reps", tag: "KONDISI", rest: "45s" },
@@ -697,7 +430,7 @@
         day: "SAB", full: "SABTU", theme: "WAR MODE", sub: "Full Conditioning Day", color: "#FF4500",
         sessions: [
           {
-            time: "🌅 PAGI", label: "KONDISIONING KERAS", duration: "60 MENIT", restDuration: "5 MIN",
+            time: "🌅 PAGI", label: "KONDISIONING KERAS", duration: "60 MENIT",
             blocks: [
               { title: "RUNNING — PUSH LIMIT", note: "Target: 2.5 km konstan.", items: [
                 { move: "Continuous Run", detail: "Target 2.5 km", tag: "KARDIO", rest: "None" }
@@ -715,7 +448,7 @@
             ]
           },
           {
-            time: "🌆 SORE", label: "SPARRING & TEKNIK BEBAS", duration: "60 MENIT", restDuration: "15 MIN",
+            time: "🌆 SORE", label: "SPARRING & TEKNIK BEBAS", duration: "60 MENIT",
             blocks: [
               { title: "OPEN TECHNIQUE", note: "Sesi bebas mengasah feeling.", items: [
                 { move: "Shadow Sparring — Boxing Focus", detail: "4 round × 3 menit", tag: "BOKS", rest: "60s" },
@@ -723,7 +456,7 @@
                 { move: "Combo Kreasi Sendiri", detail: "5 round × 2 menit", tag: "FUSION", rest: "60s" }
               ]},
               { title: "RECOVERY ACTIVE", items: [
-                { move: "Full Body Stretch", detail: "15 menit santai", tag: "MOBIL", rest: "None" }
+                { move: "Full Body Stretch", detail: "15 menit", tag: "MOBIL", rest: "None" }
               ]}
             ]
           }
@@ -739,8 +472,6 @@
     let currentDayIndex = todayObj === 0 ? 6 : todayObj - 1; 
     const realTodayIndex = currentDayIndex;
 
-    const daySelector = document.getElementById('daySelector');
-    const appContent = document.getElementById('appContent');
     const rootStyle = document.documentElement.style;
 
     function init() {
@@ -748,6 +479,8 @@
       setInterval(updateTime, 1000);
       document.getElementById('today-badge').textContent = new Date().toLocaleDateString('id-ID',{weekday:'long'}).toUpperCase();
       
+      renderGlobalHeader();
+      renderNotes();
       renderNav();
       setDay(currentDayIndex);
       setupGlobalListeners();
@@ -761,8 +494,36 @@
       document.getElementById('live-time').textContent = h + ':' + m + ':' + s;
     }
 
+    function renderGlobalHeader() {
+      document.getElementById('globalHeaderArea').innerHTML = `
+        <div class="header-glow" id="headerGlow"></div>
+        <div class="header-content">
+          <div>
+            <div class="pre-title">${globalData.preTitle}</div>
+            <div class="main-title">${globalData.mainTitle}</div>
+            <div class="sub-title">${globalData.subTitle}</div>
+          </div>
+          <div class="level-badge">
+            <div class="level-label">LEVEL</div>
+            <div class="level-value" id="headerLevelVal">${globalData.level}</div>
+            <div class="level-label" style="margin-top: 4px;">${globalData.frequency}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderNotes() {
+      const notesHtml = notesData.map((note) => `
+        <div class="note-item">
+          <div class="note-bullet dynamic-color">— <span>${note.title}</span>:</div>
+          <div class="note-text">${note.text}</div>
+        </div>
+      `).join('');
+      document.getElementById('notesArea').innerHTML = `<div class="notes-title">PROTOCOL NOTES</div>${notesHtml}`;
+    }
+
     function renderNav() {
-      daySelector.innerHTML = daysData.map((d, i) => {
+      document.getElementById('daySelector').innerHTML = daysData.map((d, i) => {
         const isToday = (i === realTodayIndex);
         return `
         <button class="day-btn" data-idx="${i}">
@@ -774,7 +535,6 @@
       }).join('');
     }
 
-    // Mengkonversi HEX ke format RGB untuk dipakai di variable CSS (neon effect)
     function hexToRgb(hex) {
       let r = 0, g = 0, b = 0;
       if (hex.length === 7) {
@@ -789,28 +549,26 @@
       currentDayIndex = index;
       const d = daysData[index];
 
-      // Update Root Variables
       rootStyle.setProperty('--accent', d.color);
       rootStyle.setProperty('--accent-rgb', hexToRgb(d.color));
       
-      document.getElementById('headerLevelVal').style.color = d.color;
+      const levelVal = document.getElementById('headerLevelVal');
+      if(levelVal) levelVal.style.color = d.color;
       document.getElementById('brand-dot').style.color = d.color;
-      
-      for(let i=1; i<=5; i++){
-          document.getElementById('noteBullet'+i).style.color = d.color;
-      }
+      document.querySelectorAll('.dynamic-color').forEach(el => el.style.color = d.color);
 
       document.querySelectorAll('.day-btn').forEach((btn, i) => {
         if (i === index) btn.classList.add('active');
         else btn.classList.remove('active');
       });
 
+      const appContent = document.getElementById('appContent');
       if (d.isRest) {
         appContent.innerHTML = `
           <div class="day-content rest-day-msg">
             <div class="rest-day-icon">💤</div>
             <div class="rest-day-title">REST DAY</div>
-            <div class="rest-day-desc">Otot tumbuh saat istirahat, bukan saat latihan. Matikan alarm, makan yang cukup, dan biarkan tubuhmu memulihkan diri untuk hari Senin.</div>
+            <div class="rest-day-desc">${d.desc || "Otot tumbuh saat istirahat, bukan saat latihan."}</div>
           </div>
         `;
       } else {
@@ -828,68 +586,110 @@
               </div>
             </div>
             <div class="sessions-container">
-              ${d.sessions.map(renderSession).join('')}
+              ${d.sessions.map((session) => renderSession(session)).join('')}
             </div>
           </div>
         `;
       }
-      
-      appContent.style.animation = 'none';
-      appContent.offsetHeight; 
-      appContent.style.animation = null;
     }
 
     function calculateSessionRest(session) {
       let totalRestSeconds = 0;
       if (!session.blocks) return "0 MIN";
+      session.blocks.forEach(block => {
+        if (!block.items) return;
+        block.items.forEach(item => {
+          let restStr = item.rest || "";
+          let restSeconds = parseInt(restStr.replace(/[^\d]/g, ''));
+          if (!isNaN(restSeconds) && restSeconds > 0) {
+            totalRestSeconds += restSeconds; 
+          }
+        });
+      });
+      return Math.round(totalRestSeconds / 60) + " MIN";
+    }
+
+    function calculateSessionWork(session) {
+      let totalWorkSeconds = 0;
+      if (!session.blocks) return "0 MIN";
       
       session.blocks.forEach(block => {
         if (!block.items) return;
         block.items.forEach(item => {
+          if (item.tag && item.tag.toUpperCase() === 'PRIMER') return;
+
           let detailStr = item.detail || "";
-          let restStr = item.rest || "";
+          let str = detailStr.toUpperCase();
           
-          // Ambil angka pertama dari properti detail (misal "4" dari "4 set x 8 reps")
-          let multiplier = parseInt(detailStr.trim().split(' ')[0]);
-          if (isNaN(multiplier)) multiplier = 0;
-          
-          // Ambil angka saja dari properti rest (misal "30" dari "30s" atau "60s jog")
-          let restSeconds = parseInt(restStr.replace(/[^\d]/g, ''));
-          if (isNaN(restSeconds)) restSeconds = 0;
-          
-          totalRestSeconds += (multiplier * restSeconds);
+          let sets = 1;
+          let parts = str.split(/[×X]/);
+          if (parts.length > 1) {
+             let setStr = parts[0].replace(/[^\d]/g, '');
+             if (setStr) sets = parseInt(setStr);
+          } else {
+             let setMatch = str.match(/(\d+)\s*(SET|ROUND)/);
+             if (setMatch) sets = parseInt(setMatch[1]);
+          }
+
+          let workSeconds = 0;
+          if (str.includes('DETIK') || str.includes('DET')) {
+            let m = str.match(/(\d+)\s*(DETIK|DET)/);
+            if (m) workSeconds = parseInt(m[1]);
+          } else if (str.includes('MENIT') || str.includes('MIN')) {
+            let m = str.match(/(\d+)\s*(MENIT|MIN)/);
+            if (m) workSeconds = parseInt(m[1]) * 60;
+          } else if (str.includes('REPS') || str.includes('REP')) {
+            let m = str.match(/(\d+)\s*(REPS?)/);
+            if (m) workSeconds = parseInt(m[1]) * 3; 
+          } else {
+             if (parts.length > 1) {
+                 let val = parseInt(parts[1].replace(/[^\d]/g, ''));
+                 if (!isNaN(val)) workSeconds = val * 3;
+             }
+          }
+
+          if (str.includes('KM')) {
+             let m = str.match(/([\d\.]+)\s*KM/);
+             if (m) workSeconds = parseFloat(m[1]) * 6 * 60; 
+          }
+
+          if (str.includes('MAX') && workSeconds === 0) {
+             workSeconds = 60;
+          }
+
+          totalWorkSeconds += (sets * workSeconds);
         });
       });
       
-      let totalMins = Math.round(totalRestSeconds / 60);
-      return totalMins + " MIN";
+      return Math.round(totalWorkSeconds / 60) + " MIN";
     }
 
-    // Parser cerdas untuk memformat detail Sets x Reps menjadi Metric Box
     function formatMetrics(detail) {
       const parsePart = (str) => {
          const m = str.trim().match(/^([\d\.]+|MAX)\s+(.+)$/i);
          if(m) return `<div class="metric-box"><span class="m-val">${m[1]}</span><span class="m-lbl">${m[2]}</span></div>`;
          return `<div class="metric-box"><span class="m-text">${str.trim()}</span></div>`;
       };
-
-      if(!detail.includes('×')) {
-         return `<div class="metrics-group">${parsePart(detail)}</div>`;
-      }
+      if(!detail.includes('×')) return `<div class="metrics-group">${parsePart(detail)}</div>`;
       const parts = detail.split('×');
       return `<div class="metrics-group">${parsePart(parts[0])}<span class="metric-divider">×</span>${parsePart(parts[1])}</div>`;
     }
 
     function renderSession(session) {
       const calculatedRest = calculateSessionRest(session);
-
+      const calculatedWork = calculateSessionWork(session);
+      
       return `
         <div class="session-card">
           <div class="session-header is-open">
             <div class="session-header-left">
-              <div class="session-name">${session.time} — ${session.label}</div>
+              <div class="session-name">
+                <span>${session.time}</span>
+                <span>—</span>
+                <span>${session.label}</span>
+              </div>
               <div class="session-badges">
-                <div class="session-badge">${session.duration}</div>
+                <div class="session-badge">⚡ WORK ${calculatedWork || '60 MENIT'}</div>
                 <div class="session-badge rest-badge-header">⏱ REST ${calculatedRest}</div>
               </div>
             </div>
@@ -897,7 +697,7 @@
           </div>
           <div class="session-body-wrapper">
             <div class="session-body-inner blocks-container">
-              ${session.blocks.map(renderBlock).join('')}
+              ${session.blocks.map((block) => renderBlock(block)).join('')}
             </div>
           </div>
         </div>
@@ -905,21 +705,17 @@
     }
 
     function renderBlock(block) {
-      const itemsHtml = block.items.map(item => {
+      const itemsHtml = block.items.map((item) => {
         const tc = tagColors[item.tag] || tagColors.WARMUP;
-        const restHtml = item.rest && item.rest !== "None" ? `<div class="rest-badge">${item.rest}</div>` : '';
-        const metricsHtml = formatMetrics(item.detail);
-        
+        const restHtml = item.rest && item.rest !== "None" ? `<div class="rest-badge"><span>${item.rest}</span></div>` : '';
         return `
           <div class="exercise-item">
             <div class="exercise-left">
-              <span class="exercise-tag" style="color: ${tc.text}; background: ${tc.bg}; border-color: ${tc.border};">
-                ${item.tag}
-              </span>
+              <span class="exercise-tag" style="color: ${tc.text}; background: ${tc.bg}; border-color: ${tc.border};">${item.tag}</span>
               <span class="exercise-name">${item.move}</span>
             </div>
             <div class="exercise-right">
-              ${metricsHtml}
+              <div>${formatMetrics(item.detail)}</div>
               ${restHtml}
             </div>
           </div>
@@ -929,17 +725,13 @@
       return `
         <div class="block">
           <div class="block-header is-open">
-            <div>
+            <div style="flex:1;">
               <div class="block-title">${block.title}</div>
-              ${block.note ? `<div class="block-note">${block.note}</div>` : ''}
+              <div class="block-note">${block.note || ''}</div>
             </div>
             <div class="block-toggle-icon">▼</div>
           </div>
-          <div class="block-items-wrapper">
-            <div class="block-items-inner">
-              ${itemsHtml}
-            </div>
-          </div>
+          <div class="block-items-wrapper"><div class="block-items-inner">${itemsHtml}</div></div>
         </div>
       `;
     }
@@ -951,7 +743,7 @@
           const idx = parseInt(dayBtn.getAttribute('data-idx'));
           if (!isNaN(idx) && idx !== currentDayIndex) setDay(idx);
         }
-
+        
         const blockHeader = e.target.closest('.block-header');
         if (blockHeader) {
           const wrapper = blockHeader.nextElementSibling;
@@ -959,7 +751,7 @@
           if (isOpen) { blockHeader.classList.remove('is-open'); wrapper.classList.add('closed'); } 
           else { blockHeader.classList.add('is-open'); wrapper.classList.remove('closed'); }
         }
-
+        
         const sessionHeader = e.target.closest('.session-header');
         if (sessionHeader) {
           const wrapper = sessionHeader.nextElementSibling;
