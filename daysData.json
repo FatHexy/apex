@@ -1,4 +1,4 @@
-const daysData = [
+[
       {
         day: "SEN", full: "SENIN", theme: "PUSH DOMINANCE", sub: "HSPU Skill + Boxing", color: "#FF4500",
         sessions: [
