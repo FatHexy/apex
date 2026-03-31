@@ -1,0 +1,256 @@
+const daysData = [
+      {
+        day: "SEN", full: "SENIN", theme: "PUSH DOMINANCE", sub: "HSPU Skill + Boxing", color: "#FF4500",
+        sessions: [
+          {
+            time: "🌅 PAGI", label: "SKILL & PUSH", duration: "60 MENIT",
+            blocks: [
+              { title: "MORNING PRIMER", note: "Lakukan 1 set dengan repetisi semaksimal mungkin.", items: [
+                { move: "Push-up", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
+                { move: "Pull-up", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
+                { move: "Dips (kursi)", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
+                { move: "Pistol Squat", detail: "1 set × MAX reps/kaki", tag: "PRIMER", rest: "60s" }
+              ]},
+              { title: "HSPU SKILL BLOCK", note: "Fokus kualitas gerak, bukan kecepatan.", items: [
+                { move: "Wall Handstand Hold", detail: "5 set × 30 detik", tag: "SKILL", rest: "60s" },
+                { move: "Elevated Pike Push-up", detail: "4 set × 8 reps", tag: "SKILL", rest: "90s" },
+                { move: "Shoulder Wall Tap", detail: "3 set × 8 reps/sisi", tag: "SKILL", rest: "60s" }
+              ]},
+              { title: "PUSH STRENGTH", note: "Jaga form tetap solid.", items: [
+                { move: "Diamond Push-up", detail: "4 set × 10 reps", tag: "STR", rest: "90s" },
+                { move: "Wide Push-up", detail: "3 set × 12 reps", tag: "STR", rest: "60s" },
+                { move: "Dips (2 kursi)", detail: "4 set × 10 reps", tag: "STR", rest: "90s" },
+                { move: "Archer Push-up", detail: "3 set × 6 reps/sisi", tag: "STR", rest: "90s" }
+              ]},
+              { title: "CARDIO FINISHER", note: "Jaga ritme jantung.", items: [
+                { move: "Skipping", detail: "3 round × 2 menit", tag: "KARDIO", rest: "30s" }
+              ]}
+            ]
+          },
+          {
+            time: "🌆 SORE", label: "BOXING", duration: "60 MENIT",
+            blocks: [
+              { title: "WARM-UP", items: [ { move: "Shadow Boxing + Footwork", detail: "10 menit", tag: "WARMUP", rest: "None" } ]},
+              { title: "BOXING TECHNIQUE", note: "Fokus kecepatan dan rotasi pinggul.", items: [
+                { move: "Jab–Cross Combo", detail: "5 round × 2 menit", tag: "BOKS", rest: "60s" },
+                { move: "Body Shot Drill", detail: "3 round × 1 menit", tag: "BOKS", rest: "60s" },
+                { move: "Head Movement + Slip", detail: "3 round × 1 menit", tag: "BOKS", rest: "60s" }
+              ]},
+              { title: "STRENGTH FINISHER", items: [
+                { move: "Explosive Push-up", detail: "4 set × 8 reps", tag: "STR", rest: "60s" },
+                { move: "Plank-to-Push-up", detail: "3 set × 10 reps", tag: "CORE", rest: "45s" }
+              ]}
+            ]
+          }
+        ]
+      },
+      {
+        day: "SEL", full: "SELASA", theme: "LEG POWER", sub: "Lower Body + Taekwondo", color: "#00BFFF",
+        sessions: [
+          {
+            time: "🌅 PAGI", label: "LOWER BODY", duration: "60 MENIT",
+            blocks: [
+              { title: "MORNING PRIMER", note: "Lakukan set terbaikmu hari ini.", items: [
+                { move: "Push-up", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
+                { move: "Pull-up", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
+                { move: "Pistol Squat", detail: "1 set × MAX reps/kaki", tag: "PRIMER", rest: "60s" }
+              ]},
+              { title: "LEG STRENGTH", note: "Gunakan tas berbeban untuk squat.", items: [
+                { move: "Squat (+ beban tas)", detail: "4 set × 15 reps", tag: "STR", rest: "90s" },
+                { move: "Bulgarian Split Squat", detail: "4 set × 10 reps/kaki", tag: "STR", rest: "90s" },
+                { move: "Single-Leg RDL", detail: "3 set × 10 reps/kaki", tag: "STR", rest: "60s" },
+                { move: "Jump Squat", detail: "4 set × 12 reps", tag: "POWER", rest: "60s" },
+                { move: "Wall Sit", detail: "3 set × 45 detik", tag: "ISOMETRIK", rest: "60s" }
+              ]},
+              { title: "RUNNING INTERVALS", note: "Membangun base aerobik.", items: [
+                { move: "Interval Run", detail: "6 round × 30 detik", tag: "KARDIO", rest: "60s" }
+              ]}
+            ]
+          },
+          {
+            time: "🌆 SORE", label: "TAEKWONDO", duration: "60 MENIT",
+            blocks: [
+              { title: "WARM-UP", items: [ { move: "Dynamic Stretch + Leg Swing", detail: "10 menit", tag: "WARMUP", rest: "None" } ]},
+              { title: "TAEKWONDO TECHNIQUE", note: "Kontrol dan kecepatan.", items: [
+                { move: "Basic Stance Drill", detail: "5 menit", tag: "TKD", rest: "None" },
+                { move: "Dollyo Chagi (Roundhouse)", detail: "5 set × 10 reps/kaki", tag: "TKD", rest: "30s" },
+                { move: "Ap Chagi (Front Kick)", detail: "4 set × 10 reps/kaki", tag: "TKD", rest: "30s" },
+                { move: "Yeop Chagi (Side Kick)", detail: "4 set × 8 reps/kaki", tag: "TKD", rest: "30s" },
+                { move: "Jab + Roundhouse Combo", detail: "5 round × 1 menit", tag: "TKD", rest: "45s" }
+              ]},
+              { title: "KONDISIONING", items: [
+                { move: "Burpee", detail: "3 set × 12 reps", tag: "KONDISI", rest: "45s" },
+                { move: "Mountain Climber", detail: "3 set × 30 detik", tag: "KONDISI", rest: "30s" }
+              ]}
+            ]
+          }
+        ]
+      },
+      {
+        day: "RAB", full: "RABU", theme: "PULL & CORE", sub: "HSPU Skill + Boxing", color: "#39FF14",
+        sessions: [
+          {
+            time: "🌅 PAGI", label: "PULL + CORE", duration: "60 MENIT",
+            blocks: [
+              { title: "MORNING PRIMER", items: [
+                { move: "Push-up", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
+                { move: "Pull-up", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
+                { move: "Dips (kursi)", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
+                { move: "Pistol Squat", detail: "1 set × MAX reps/kaki", tag: "PRIMER", rest: "60s" }
+              ]},
+              { title: "HSPU SKILL BLOCK", note: "Progress dari Senin: naikkan intensitas.", items: [
+                { move: "Wall Kick-up + Hold", detail: "10 set × 20 detik", tag: "SKILL", rest: "45s" },
+                { move: "Handstand Wall Shoulder Tap", detail: "4 set × 8 taps", tag: "SKILL", rest: "60s" },
+                { move: "Eccentric Pike Push-up", detail: "4 set × 5 reps", tag: "SKILL", rest: "90s" }
+              ]},
+              { title: "PULL STRENGTH", note: "Gerakan eksentrik terkontrol.", items: [
+                { move: "Pull-up", detail: "4 set × 10 reps", tag: "STR", rest: "120s" },
+                { move: "Chin-up", detail: "3 set × 8 reps", tag: "STR", rest: "90s" },
+                { move: "Australian Row (bawah meja)", detail: "4 set × 12 reps", tag: "STR", rest: "60s" },
+                { move: "Commando Pull-up", detail: "3 set × 6 reps/sisi", tag: "STR", rest: "90s" }
+              ]},
+              { title: "CORE BLOCK", note: "Fokus stabilitas.", items: [
+                { move: "L-sit Hold (lantai/kursi)", detail: "4 set × 15 detik", tag: "CORE", rest: "45s" },
+                { move: "Hollow Body Hold", detail: "3 set × 30 detik", tag: "CORE", rest: "45s" },
+                { move: "Dragon Flag Negative", detail: "3 set × 5 reps", tag: "CORE", rest: "60s" }
+              ]}
+            ]
+          },
+          {
+            time: "🌆 SORE", label: "BOXING", duration: "60 MENIT",
+            blocks: [
+              { title: "WARM-UP", items: [ { move: "Footwork Ladder Drill", detail: "10 menit", tag: "WARMUP", rest: "None" } ]},
+              { title: "BOXING — DEFENSE & COUNTER", note: "Fokus minggu ini: slip + counter punch.", items: [
+                { move: "Slip + Cross Counter", detail: "5 round × 2 menit", tag: "BOKS", rest: "60s" },
+                { move: "Parry + Jab", detail: "3 round × 1 menit", tag: "BOKS", rest: "60s" },
+                { move: "Roll + Uppercut", detail: "3 round × 1 menit", tag: "BOKS", rest: "60s" },
+                { move: "Freestyle Shadow Boxing", detail: "3 round × 2 menit", tag: "BOKS", rest: "60s" }
+              ]},
+              { title: "KONDISIONING", items: [
+                { move: "Skipping", detail: "5 round × 1 menit", tag: "KARDIO", rest: "30s" }
+              ]}
+            ]
+          }
+        ]
+      },
+      {
+        day: "KAM", full: "KAMIS", theme: "ACTIVE RECOVERY", sub: "Aerobik + Taekwondo", color: "#FFD700",
+        sessions: [
+          {
+            time: "🌅 PAGI", label: "CARDIO + MOBILITAS", duration: "50 MENIT",
+            blocks: [
+              { title: "AEROBIK BASE", note: "Pace santai — bisa ngobrol = pace tepat.", items: [
+                { move: "Easy Jog", detail: "20 menit", tag: "KARDIO", rest: "None" }
+              ]},
+              { title: "MOBILITY WORK", note: "Tahan setiap posisi dalam relaksasi.", items: [
+                { move: "Hip Flexor Stretch", detail: "3 set × 45 detik", tag: "MOBIL", rest: "15s" },
+                { move: "Thoracic Spine Rotation", detail: "2 set × 10 reps", tag: "MOBIL", rest: "15s" },
+                { move: "Shoulder Dislocate (handuk)", detail: "3 set × 10 reps", tag: "MOBIL", rest: "15s" },
+                { move: "Deep Squat Hold", detail: "3 set × 45 detik", tag: "MOBIL", rest: "30s" },
+                { move: "Pigeon Pose", detail: "2 set × 60 detik", tag: "MOBIL", rest: "15s" }
+              ]}
+            ]
+          },
+          {
+            time: "🌆 SORE", label: "TAEKWONDO", duration: "60 MENIT",
+            blocks: [
+              { title: "POOMSAE / PATTERN", note: "Fokus teknik bersih, bukan kecepatan.", items: [
+                { move: "Taegeuk Pattern (Poomsae)", detail: "5 set × 1 reps", tag: "TKD", rest: "30s" },
+                { move: "Slow-motion Kick Drill", detail: "3 set × 10 reps", tag: "TKD", rest: "45s" }
+              ]},
+              { title: "FLEKSIBILITAS TENDANGAN", note: "Sesi relaksasi sendi.", items: [
+                { move: "Standing Leg Raise", detail: "3 set × 10 reps", tag: "TKD", rest: "30s" },
+                { move: "Side Split Progression", detail: "1 set × 5 menit", tag: "MOBIL", rest: "None" },
+                { move: "Front Split Progression", detail: "1 set × 5 menit", tag: "MOBIL", rest: "None" }
+              ]}
+            ]
+          }
+        ]
+      },
+      {
+        day: "JUM", full: "JUMAT", theme: "FULL BODY POWER", sub: "HSPU Skill + Mixed MA", color: "#FF69B4",
+        sessions: [
+          {
+            time: "🌅 PAGI", label: "FULL BODY + HSPU", duration: "60 MENIT",
+            blocks: [
+              { title: "MORNING PRIMER", items: [
+                { move: "Push-up", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
+                { move: "Pull-up", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
+                { move: "Dips (kursi)", detail: "1 set × MAX reps", tag: "PRIMER", rest: "30s" },
+                { move: "Pistol Squat", detail: "1 set × MAX reps", tag: "PRIMER", rest: "60s" }
+              ]},
+              { title: "HSPU SKILL — CHECK", note: "Hari tes mental. Berani coba dinding?", items: [
+                { move: "Wall HSPU Negative", detail: "5 set × 3 reps", tag: "SKILL", rest: "120s" },
+                { move: "Elevated Pike Push-up", detail: "4 set × 8 reps", tag: "SKILL", rest: "90s" },
+                { move: "Handstand Wall Hold", detail: "3 set × 40 detik", tag: "SKILL", rest: "60s" }
+              ]},
+              { title: "FULL BODY CIRCUIT", note: "Lakukan berurutan. Setelah 1 putaran, istirahat 120 detik.", items: [
+                { move: "Pull-up", detail: "4 round × 8 reps", tag: "STR", rest: "None" },
+                { move: "Dips", detail: "4 round × 10 reps", tag: "STR", rest: "None" },
+                { move: "Push-up", detail: "4 round × 15 reps", tag: "STR", rest: "None" },
+                { move: "Jump Squat", detail: "4 round × 12 reps", tag: "POWER", rest: "None" },
+                { move: "L-sit Hold", detail: "4 round × 20 detik", tag: "CORE", rest: "120s" }
+              ]},
+              { title: "CARDIO FINISHER", items: [
+                { move: "Skipping", detail: "5 round × 1 menit", tag: "KARDIO", rest: "30s" }
+              ]}
+            ]
+          },
+          {
+            time: "🌆 SORE", label: "MIXED MARTIAL ARTS", duration: "60 MENIT",
+            blocks: [
+              { title: "WARM-UP", items: [ { move: "Shadow Boxing + Tendangan", detail: "10 menit", tag: "WARMUP", rest: "None" } ]},
+              { title: "BOXING + TKD FUSION", note: "Gabungkan teknik kedua disiplin.", items: [
+                { move: "Jab–Cross–Roundhouse Kick", detail: "5 round × 2 menit", tag: "FUSION", rest: "60s" },
+                { move: "Slip–Counter–Side Kick", detail: "4 round × 1 menit", tag: "FUSION", rest: "60s" },
+                { move: "Footwork Box Drill", detail: "3 round × 2 menit", tag: "FUSION", rest: "60s" }
+              ]},
+              { title: "KONDISIONING", items: [
+                { move: "Burpee", detail: "4 set × 10 reps", tag: "KONDISI", rest: "45s" },
+                { move: "Sprint di Tempat (High Knees)", detail: "5 set × 30 detik", tag: "KONDISI", rest: "30s" }
+              ]}
+            ]
+          }
+        ]
+      },
+      {
+        day: "SAB", full: "SABTU", theme: "WAR MODE", sub: "Full Conditioning Day", color: "#FF4500",
+        sessions: [
+          {
+            time: "🌅 PAGI", label: "KONDISIONING KERAS", duration: "60 MENIT",
+            blocks: [
+              { title: "RUNNING — PUSH LIMIT", note: "Target: 2.5 km konstan.", items: [
+                { move: "Continuous Run", detail: "Target 2.5 km", tag: "KARDIO", rest: "None" }
+              ]},
+              { title: "METCON CIRCUIT", note: "Istirahat 90 detik HANYA setelah skipping.", items: [
+                { move: "Burpee Pull-up", detail: "3 round × 8 reps", tag: "POWER", rest: "None" },
+                { move: "Jump Squat", detail: "3 round × 15 reps", tag: "POWER", rest: "None" },
+                { move: "Push-up", detail: "3 round × 20 reps", tag: "STR", rest: "None" },
+                { move: "Skipping", detail: "3 round × 3 menit", tag: "KARDIO", rest: "90s" }
+              ]},
+              { title: "INDOOR FINISHER (TABATA)", note: "Pengganti sprint. Lakukan di tempat tanpa jeda panjang.", items: [
+                { move: "High Knees", detail: "8 round × 20 detik", tag: "KARDIO", rest: "10s" },
+                { move: "Mountain Climber", detail: "8 round × 20 detik", tag: "KONDISI", rest: "10s" }
+              ]}
+            ]
+          },
+          {
+            time: "🌆 SORE", label: "SPARRING & TEKNIK BEBAS", duration: "60 MENIT",
+            blocks: [
+              { title: "OPEN TECHNIQUE", note: "Sesi bebas mengasah feeling.", items: [
+                { move: "Shadow Sparring — Boxing Focus", detail: "4 round × 3 menit", tag: "BOKS", rest: "60s" },
+                { move: "Shadow Sparring — TKD Focus", detail: "4 round × 3 menit", tag: "TKD", rest: "60s" },
+                { move: "Combo Kreasi Sendiri", detail: "5 round × 2 menit", tag: "FUSION", rest: "60s" }
+              ]},
+              { title: "RECOVERY ACTIVE", items: [
+                { move: "Full Body Stretch", detail: "15 menit", tag: "MOBIL", rest: "None" }
+              ]}
+            ]
+          }
+        ]
+      },
+      {
+        day: "MIN", full: "MINGGU", theme: "REST DAY", sub: "Total Recovery", color: "#444444",
+        isRest: true
+      }
+    ];
