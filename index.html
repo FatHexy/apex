@@ -175,7 +175,6 @@
     <section class="protocol-notes" id="notesArea"></section>
 
   </div>
-  <script src="daysData.js"></script>
   <script>
     // --- DATA ---
     const tagColors = {
@@ -210,6 +209,12 @@
       { title: "Beban Tambahan", text: "Gunakan tas berisi buku/batu untuk squat. Tambah beban 5–10% setiap 2 minggu." },
       { title: "Recovery", text: "Tidur 7–8 jam. Ini bagian dari program, bukan opsional. Istirahat total di hari Minggu." }
     ];
+
+    fetch('./daysData.json')
+  .then(res => res.json())
+  .then(data => {
+    const daysData = data);
+  });
 
     let todayObj = new Date().getDay();
     let currentDayIndex = todayObj === 0 ? 6 : todayObj - 1; 
